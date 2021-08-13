@@ -9,12 +9,12 @@ default: &default
 
 development:
   <<: *default
-  database: journal_dev
+  database: stock_market_app_dev
 
 test:
   <<: *default
-  database: journal_test
+  database: stock_market_app_test
 
 production:
   <<: *default
-  database: journal_prod
+  database: stock_market_app_prod
