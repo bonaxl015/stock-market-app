@@ -31,6 +31,8 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseRewinder.clean
   end
+
+  config.include Devise::Test::ControllerHelpers
 end
 
 Shoulda::Matchers.configure do |config|
