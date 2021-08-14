@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Rails Project</title>
+    <title>Stock Market App</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,7 @@
   </head>
 
   <body>
+    <%= render 'layouts/header' %>
     <%= render 'layouts/devise_flash' %>
     <%= yield %>
   </body>
