@@ -32,7 +32,7 @@ RSpec.configure do |config|
     DatabaseRewinder.clean
   end
 
-  config.include Devise::Test::ControllerHelpers
+  config.include Devise::Test::IntegrationHelpers
 end
 
 Shoulda::Matchers.configure do |config|
