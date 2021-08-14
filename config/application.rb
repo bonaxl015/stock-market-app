@@ -31,5 +31,8 @@ module RailsProject
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.assets.configure do |env|
+      env.export_concurrent = false
+    end
   end
 end
