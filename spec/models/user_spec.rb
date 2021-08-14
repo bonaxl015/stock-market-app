@@ -55,7 +55,7 @@ RSpec.describe User, type: :model do
   end
 
   context 'without a username' do
-    before :each do
+    before do
       user.username = nil
     end
 
@@ -65,7 +65,7 @@ RSpec.describe User, type: :model do
   end
 
   context 'when username is not unique and not case sensitive' do
-    before :each do
+    before do
       described_class.create(email: 'example@mail.com',
                              password: 'password',
                              username: 'USERNAME01',
@@ -80,7 +80,7 @@ RSpec.describe User, type: :model do
   end
 
   context 'when username is less than 6 characters' do
-    before :each do
+    before do
       user.username = 'A' * 5
     end
 
@@ -90,7 +90,7 @@ RSpec.describe User, type: :model do
   end
 
   context 'when username contains special characters' do
-    before :each do
+    before do
       user.username = '.' * 6
     end
 
