@@ -1,0 +1,13 @@
+= form_with model: @stock do |f|
+  .form-floating.mb-4
+    = f.text_field :name, class: "form-control", id: "name", placeholder: "Company Name"
+    %label(for="floatingInput") Company Name
+  .form-floating.mb-4
+    = f.number_field :unit_price, class: "form-control", id: "unit_price", placeholder: "Stock Price"
+    %label(for="floatingInput") Stock Price
+  .form-floating.mb-4
+    = f.number_field :shares, class: "form-control", id: "shares", placeholder: "Number of Shares"
+    %label(for="floatingInput") Number of Shares
+  .d-flex.justify-content-evenly
+    = f.submit :Submit, class: "btn btn-orange"
+    = link_to "Back", stocks_market_path, class: "btn btn-danger"
