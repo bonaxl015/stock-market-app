@@ -1,18 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Stock, type: :model do
-  let(:user) do
-    User.create(email: 'example@mail.com',
-                password: 'password',
-                username: 'Username01',
-                user_type: 'User')
-  end
-
   subject(:stock) do
     described_class.create(name: 'Stock',
                            unit_price: 1000,
                            shares: 100,
                            user_id: user.id)
+  end
+
+  let(:user) do
+    User.create(email: 'example@mail.com',
+                password: 'password',
+                username: 'Username01',
+                user_type: 'User')
   end
 
   context 'with associations' do
