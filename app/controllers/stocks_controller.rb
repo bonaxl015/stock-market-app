@@ -17,7 +17,7 @@ class StocksController < ApplicationController
 
     respond_to do |format|
       if @stock.save
-        format.html { redirect_to stocks_market_path, notice: "Stock was successfully added." }
+        format.html { redirect_to stocks_market_path, notice: 'Stock was successfully added.' }
         format.json { render :index, status: :created, location: @stock }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -31,11 +31,11 @@ class StocksController < ApplicationController
   def update
     respond_to do |format|
       if @stock.update(stock_params)
-          format.html { redirect_to stocks_market_path, notice: 'Stock was successfully updated.' }
-          format.json { render :index, status: :ok, location: @stock }
+        format.html { redirect_to stocks_market_path, notice: 'Stock was successfully updated.' }
+        format.json { render :index, status: :ok, location: @stock }
       else
-          format.html { render :edit }
-          format.json { render json: @stock.errors, status: :unprocessable_entity }
+        format.html { render :edit }
+        format.json { render json: @stock.errors, status: :unprocessable_entity }
       end
     end
   end
