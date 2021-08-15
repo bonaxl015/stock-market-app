@@ -5,7 +5,7 @@ RSpec.describe User, type: :model do
     described_class.create(email: 'example@mail.com',
                            password: 'password',
                            username: 'Username01',
-                           user_type: 'Broker')
+                           user_type: 'Type')
   end
 
   context 'with associations' do
@@ -69,7 +69,7 @@ RSpec.describe User, type: :model do
       described_class.create(email: 'example@mail.com',
                              password: 'password',
                              username: 'USERNAME01',
-                             user_type: 'Broker')
+                             user_type: 'Type')
 
       user.username = user.username
     end
