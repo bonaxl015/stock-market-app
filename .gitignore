@@ -52,3 +52,5 @@ yarn-debug.log*
 /config/master.key
 
 /config/master.key
+
+/config/credentials/environment.key
