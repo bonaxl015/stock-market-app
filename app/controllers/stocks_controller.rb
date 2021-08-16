@@ -6,8 +6,6 @@ class StocksController < ApplicationController
     @user_stocks = Stock.where(user_id: current_user.id)
   end
 
-  def show; end
-
   def new
     @stock = current_user.stocks.build
   end
