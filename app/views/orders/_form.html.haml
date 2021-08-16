@@ -1,0 +1,16 @@
+= form_with model: [@stock, @order] do |f|
+  .form-floating.mb-4
+    = f.text_field :name, class: "form-control", id: "name", :readonly => true, :value => @stock.name
+    %label(for="floatingInput") Company Name
+  .form-floating.mb-4
+    = f.number_field :unit_price, class: "form-control", id: "unit_price", :readonly => true, :value => @stock.unit_price
+    %label(for="floatingInput") Stock Price
+  .form-floating.mb-4
+    - if params[:action] == 'new'
+      = f.number_field :shares, in: 1..@stock.shares, step: 1, class: "form-control", id: "shares", placeholder: "Number of Shares"
+    - elsif params[:action] == 'edit'
+      = f.number_field :shares, in: 1..@order.shares, step: 1, class: "form-control", id: "shares", placeholder: "Number of Shares"
+    %label(for="floatingInput") Number of Shares
+  .d-flex.justify-content-evenly
+    = f.submit :Submit, class: "btn btn-orange"
+    = link_to "Back", stocks_market_path, class: "btn btn-danger"
