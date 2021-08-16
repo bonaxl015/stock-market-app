@@ -28,7 +28,6 @@ class OrdersController < ApplicationController
 
   def update
     @order = @stock.orders.find(params[:id])
-    
     respond_to do |format|
       if @order.update(order_params)
         process_sell_stock(@order.shares, @stock.id)
