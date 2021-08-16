@@ -13,7 +13,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.save
         process_buy_stock(@order.shares, @stock.id)
-        format.html { redirect_to orders_all_path, notice: @stock.name + ' was successfully ordered.' }
+        format.html { redirect_to orders_all_path, notice: 'Stock was successfully ordered.' }
         format.json { render :all, status: :created, location: @order.stock }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -32,7 +32,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.update(order_params)
         process_sell_stock(@order.shares, @stock.id)
-        format.html { redirect_to orders_all_path, notice: @stock.name + ' was successfully sold.' }
+        format.html { redirect_to orders_all_path, notice: 'Stock was successfully sold.' }
         format.json { render :all, status: :created, location: @order.stock }
       else
         format.html { render :new, status: :unprocessable_entity }
