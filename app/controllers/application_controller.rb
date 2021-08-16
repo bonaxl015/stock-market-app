@@ -4,4 +4,8 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(_resource)
     stocks_market_path
   end
+
+  rescue_from CanCan::AccessDenied do |e|
+    redirect_to main_app.stocks_market_path, alert: e.message
+  end
 end
