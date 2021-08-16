@@ -9,6 +9,16 @@
   </div>
 
   <div class="field">
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>
+
+  <div class="field">
+    <%= f.label :user_type %>
+    <%= f.select :user_type, options_for_select(['Broker', 'Buyer']), selected: 'Broker', {} %>
+  </div>
+
+  <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
