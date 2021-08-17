@@ -1,12 +1,10 @@
 class StocksController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_stock, only: %i[show edit update destroy]
+  before_action :find_stock, only: %i[edit update destroy]
 
   def index
     @user_stocks = Stock.where(user_id: current_user.id)
   end
-
-  def show; end
 
   def new
     @stock = current_user.stocks.build

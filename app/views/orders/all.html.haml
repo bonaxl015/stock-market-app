@@ -1,0 +1,18 @@
+.container.card.shadow.p-3.mb-5.bg-secondary.rounded
+  .d-flex.justify-content-between.align-items-center
+    %h1 My Orders
+    = link_to "Back", stocks_market_path, class: "btn btn-danger"
+  %table.table.table-light
+    %thead
+      %tr
+        %th{:scope => "col"} Stock Name
+        %th{:scope => "col"} Price Per Share
+        %th{:scope => "col"} Number of Shares
+        %th{:scope => "col"} Actions 
+    %tbody 
+      - @user_orders.each do |user_order|
+        %tr 
+          %td= user_order.name
+          %td= user_order.unit_price
+          %td= user_order.shares
+          %td= link_to "Sell", edit_stock_order_path(user_order.stock, user_order), class: "btn btn-danger"
