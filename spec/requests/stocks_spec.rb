@@ -1,7 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe "Stocks", type: :request do
+RSpec.describe 'Stocks', type: :request do
   subject(:stock) { create(:stock) }
+
   let(:valid_attributes) { attr_strat(:stock) }
   let(:invalid_attributes) { attr_strat(:stock, :invalid_attributes) }
 
@@ -13,7 +14,7 @@ RSpec.describe "Stocks", type: :request do
 
   shared_examples 'renders 422 response' do
     it 'renders 422 response' do
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 
@@ -36,7 +37,7 @@ RSpec.describe "Stocks", type: :request do
       include_examples 'renders a successful response'
     end
 
-    describe "GET /show" do
+    describe 'GET /show' do
       it 'raises error' do
         expect do
           get stock_url(stock)
@@ -44,7 +45,7 @@ RSpec.describe "Stocks", type: :request do
       end
     end
 
-    describe "GET /new" do
+    describe 'GET /new' do
       before do
         get new_stock_url
       end
@@ -52,7 +53,7 @@ RSpec.describe "Stocks", type: :request do
       include_examples 'renders a successful response'
     end
 
-    describe "GET /edit" do
+    describe 'GET /edit' do
       before do
         get edit_stock_url(stock)
       end
