@@ -1,107 +1,79 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
-  subject(:order) do
-    described_class.create(name: 'Order',
-                           unit_price: 1000,
-                           shares: 100,
-                           user_id: user.id,
-                           stock_id: stock.id)
+  subject(:order) { create(:order) }
+
+  it 'belongs to user' do
+    expect(described_class.reflect_on_association(:user).macro).to eq :belongs_to
   end
 
-  let(:user) do
-    User.create(email: 'example@mail.com',
-                password: 'password',
-                username: 'Username01',
-                user_type: 'User')
+  it 'belongs to stock' do
+    expect(described_class.reflect_on_association(:stock).macro).to eq :belongs_to
   end
 
-  let(:stock) do
-    Stock.create(name: 'Stock',
-                 unit_price: 1000,
-                 shares: 100,
-                 user_id: user.id)
+  it 'validates with valid attributes' do
+    expect(order).to be_valid
   end
 
-  context 'with associations' do
-    it 'belongs to user' do
-      expect(described_class.reflect_on_association(:user).macro).to eq :belongs_to
-    end
-
-    it 'belongs to stock' do
-      expect(described_class.reflect_on_association(:stock).macro).to eq :belongs_to
-    end
-  end
-
-  context 'with valid attributes' do
-    it 'does validate' do
-      expect(order).to be_valid
-    end
-  end
-
-  context 'without a name' do
-    before do
+  describe '#name' do
+    it 'invalidates null' do
       order.name = nil
+      order.valid?
+      expect(order.errors[:name].size).to eq(1)
     end
 
-    it 'does not validate' do
-      expect(order).not_to be_valid
+    context 'when unique but case sensitive' do
+      let(:another) { create(:order) }
+
+      before do
+        order.name = another.name.upcase
+        order.valid?
+      end
+
+      it 'does not validate' do
+        expect(order.errors[:name].size).to eq(1)
+      end
+    end
+
+    context 'when unique but not case sensitive' do
+      let(:another) { create(:order) }
+
+      before do
+        order.name = another.name
+        order.valid?
+      end
+
+      it 'does not validate' do
+        expect(order.errors[:name].size).to eq(1)
+      end
     end
   end
 
-  context 'when name is not unique but not case sensitive' do
-    before do
-      described_class.create(name: 'ORDER',
-                             unit_price: 1000,
-                             shares: 100,
-                             user_id: user.id,
-                             stock_id: stock.id)
-
-      order.name = order.name
-    end
-
-    it 'does not validate' do
-      expect(order).not_to be_valid
-    end
-  end
-
-  context 'without a unit price' do
-    before do
+  describe '#unit price' do
+    it 'invalidates null' do
       order.unit_price = nil
+      order.valid?
+      expect(order.errors[:unit_price].size).to eq(2)
     end
 
-    it 'does not validate' do
-      expect(order).not_to be_valid
-    end
-  end
-
-  context 'when unit price is 0' do
-    before do
+    it 'invalidates zero' do
       order.unit_price = 0
-    end
-
-    it 'does not validate' do
-      expect(order).not_to be_valid
+      order.valid?
+      expect(order.errors[:unit_price].size).to eq(1)
     end
   end
 
-  context 'without shares' do
-    before do
+  describe '#shares' do
+    it 'invalidates null' do
       order.shares = nil
+      order.valid?
+      expect(order.errors[:shares].size).to eq(2)
     end
 
-    it 'does not validate' do
-      expect(order).not_to be_valid
-    end
-  end
-
-  context 'when shares are 0' do
-    before do
+    it 'invalidates zero' do
       order.shares = 0
-    end
-
-    it 'does not validate' do
-      expect(order).not_to be_valid
+      order.valid?
+      expect(order.errors[:shares].size).to eq(1)
     end
   end
 end
