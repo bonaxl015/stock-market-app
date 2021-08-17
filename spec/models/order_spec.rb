@@ -21,32 +21,6 @@ RSpec.describe Order, type: :model do
       order.valid?
       expect(order.errors[:name].size).to eq(1)
     end
-
-    context 'when unique but case sensitive' do
-      let(:another) { create(:order) }
-
-      before do
-        order.name = another.name.upcase
-        order.valid?
-      end
-
-      it 'does not validate' do
-        expect(order.errors[:name].size).to eq(1)
-      end
-    end
-
-    context 'when unique but not case sensitive' do
-      let(:another) { create(:order) }
-
-      before do
-        order.name = another.name
-        order.valid?
-      end
-
-      it 'does not validate' do
-        expect(order.errors[:name].size).to eq(1)
-      end
-    end
   end
 
   describe '#unit price' do
