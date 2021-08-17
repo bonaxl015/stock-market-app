@@ -18,8 +18,8 @@ RSpec.describe 'Stocks', type: :request do
     end
   end
 
-  shared_examples 'renders 422 response' do
-    it 'renders 422 response' do
+  shared_examples 'renders unprocessable entity response' do
+    it 'renders unprocessable entity response' do
       expect(response).to have_http_status(:unprocessable_entity)
     end
   end
@@ -86,7 +86,7 @@ RSpec.describe 'Stocks', type: :request do
         post stocks_url, params: { stock: invalid_attributes }
       end
 
-      include_examples 'renders 422 response'
+      include_examples 'renders unprocessable entity response'
     end
   end
 
