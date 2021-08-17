@@ -1,101 +1,75 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  subject(:user) do
-    described_class.create(email: 'example@mail.com',
-                           password: 'password',
-                           username: 'Username01',
-                           user_type: 'Type')
+  subject(:user) { create(:user) }
+
+  it 'has many stocks' do
+    expect(described_class.reflect_on_association(:stocks).macro).to eq :has_many
   end
 
-  context 'with associations' do
-    it 'has many stocks' do
-      expect(described_class.reflect_on_association(:stocks).macro).to eq :has_many
-    end
-
-    it 'has many orders' do
-      expect(described_class.reflect_on_association(:orders).macro).to eq :has_many
-    end
+  it 'has many orders' do
+    expect(described_class.reflect_on_association(:orders).macro).to eq :has_many
   end
 
-  context 'with dependents' do
-    let(:stock) do
-      Stock.create(name: 'Stocks',
-                   unit_price: 1000,
-                   shares: 1000,
-                   user_id: user.id)
-    end
-
-    let(:order) do
-      Order.create(name: 'Orders',
-                   unit_price: 1000,
-                   shares: 1000,
-                   user_id: user.id,
-                   stock_id: stock.id)
-    end
-
-    it 'deletes its stocks' do
-      stock
-      user.destroy
-      expect(Stock.find_by(user_id: user.id)).to eq nil
-    end
-
-    it 'deletes its orders' do
-      stock
-      order
-      user.destroy
-      expect(Order.find_by(user_id: user.id)).to eq nil
-    end
+  it 'deletes its stocks' do
+    create(:stock)
+    user.destroy
+    expect(Stock.find_by(user_id: user.id)).to eq nil
   end
 
-  context 'with valid attributes' do
-    it 'does validate' do
-      expect(user).to be_valid
-    end
+  it 'deletes its orders' do
+    create(:order)
+    user.destroy
+    expect(Order.find_by(user_id: user.id)).to eq nil
   end
 
-  context 'without a username' do
-    before do
+  it 'validates with valid attributes' do
+    expect(user).to be_valid
+  end
+
+  describe '#username' do
+    it 'invalidates null' do
       user.username = nil
+      user.valid?
+      expect(user.errors[:username].size).to eq(3)
     end
 
-    it 'does not validate' do
-      expect(user).not_to be_valid
-    end
-  end
-
-  context 'when username is not unique but not case sensitive' do
-    before do
-      described_class.create(email: 'example@mail.com',
-                             password: 'password',
-                             username: 'USERNAME01',
-                             user_type: 'Type')
-
-      user.username = user.username
-    end
-
-    it 'does not validate' do
-      expect(user).not_to be_valid
-    end
-  end
-
-  context 'when username is less than 6 characters' do
-    before do
+    it 'invalidates less than 6 characters' do
       user.username = 'A' * 5
+      user.valid?
+      expect(user.errors[:username].size).to eq(1)
     end
 
-    it 'does not validate' do
-      expect(user).not_to be_valid
-    end
-  end
-
-  context 'when username contains special characters' do
-    before do
+    it 'invalidates special characters' do
       user.username = '.' * 6
+      user.valid?
+      expect(user.errors[:username].size).to eq(1)
     end
 
-    it 'does not validate' do
-      expect(user).not_to be_valid
+    context 'when unique but case sensitive' do
+      let(:another) { create(:user) }
+
+      before do
+        user.username = another.username.upcase
+        user.valid?
+      end
+
+      it 'does not validate' do
+        expect(user.errors[:username].size).to eq(1)
+      end
+    end
+
+    context 'when unique but not case sensitive' do
+      let(:another) { create(:user) }
+
+      before do
+        user.username = another.username
+        user.valid?
+      end
+
+      it 'does not validate' do
+        expect(user.errors[:username].size).to eq(1)
+      end
     end
   end
 end
