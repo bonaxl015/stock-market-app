@@ -45,7 +45,7 @@ RSpec.describe Stock, type: :model do
       let(:another) { create(:stock) }
 
       before do
-        stock.name = another.name.upcase
+        stock.name = another.name
         stock.valid?
       end
 
