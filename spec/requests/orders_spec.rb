@@ -9,7 +9,7 @@ RSpec.describe 'Orders', type: :request do
 
   shared_context 'when user signed in' do
     before do
-      sign_in create(:user)
+      sign_in create(:user, user_type: 'Buyer')
     end
   end
 
