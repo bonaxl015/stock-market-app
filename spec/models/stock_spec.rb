@@ -1,115 +1,85 @@
 require 'rails_helper'
 
 RSpec.describe Stock, type: :model do
-  subject(:stock) do
-    described_class.create(name: 'Stock',
-                           unit_price: 1000,
-                           shares: 100,
-                           user_id: user.id)
+  subject(:stock) { create(:stock) }
+
+  it 'belongs to user' do
+    expect(described_class.reflect_on_association(:user).macro).to eq :belongs_to
   end
 
-  let(:user) do
-    User.create(email: 'example@mail.com',
-                password: 'password',
-                username: 'Username01',
-                user_type: 'User')
+  it 'has many orders' do
+    expect(described_class.reflect_on_association(:orders).macro).to eq :has_many
   end
 
-  context 'with associations' do
-    it 'belongs to user' do
-      expect(described_class.reflect_on_association(:user).macro).to eq :belongs_to
-    end
-
-    it 'has many orders' do
-      expect(described_class.reflect_on_association(:orders).macro).to eq :has_many
-    end
+  it 'deletes its orders' do
+    create(:order)
+    stock.destroy
+    expect(Order.find_by(stock_id: stock.id)).to eq nil
   end
 
-  context 'with dependents' do
-    let(:order) do
-      Order.create(name: 'Orders',
-                   unit_price: 1000,
-                   shares: 1000,
-                   user_id: user.id,
-                   stock_id: stock.id)
-    end
-
-    it 'deletes its orders' do
-      stock
-      order
-      user.destroy
-      expect(Order.find_by(stock_id: stock.id)).to eq nil
-    end
+  it 'validates with valid attributes' do
+    expect(stock).to be_valid
   end
 
-  context 'with valid attributes' do
-    it 'does validate' do
-      expect(stock).to be_valid
-    end
-  end
-
-  context 'without a name' do
-    before do
+  describe '#name' do
+    it 'invalidates null' do
       stock.name = nil
+      stock.valid?
+      expect(stock.errors[:name].size).to eq(1)
     end
 
-    it 'does not validate' do
-      expect(stock).not_to be_valid
+    context 'when unique but case sensitive' do
+      let(:another) { create(:stock) }
+
+      before do
+        stock.name = another.name.upcase
+        stock.valid?
+      end
+
+      it 'does not validate' do
+        expect(stock.errors[:name].size).to eq(1)
+      end
+    end
+
+    context 'when unique but not case sensitive' do
+      let(:another) { create(:stock) }
+
+      before do
+        stock.name = another.name.upcase
+        stock.valid?
+      end
+
+      it 'does not validate' do
+        expect(stock.errors[:name].size).to eq(1)
+      end
     end
   end
 
-  context 'when name is not unique but not case sensitive' do
-    before do
-      described_class.create(name: 'STOCK',
-                             unit_price: 1000,
-                             shares: 100,
-                             user_id: user.id)
-
-      stock.name = stock.name
-    end
-
-    it 'does not validate' do
-      expect(stock).not_to be_valid
-    end
-  end
-
-  context 'without a unit price' do
-    before do
+  describe '#unit price' do
+    it 'invalidates null' do
       stock.unit_price = nil
+      stock.valid?
+      expect(stock.errors[:unit_price].size).to eq(2)
     end
 
-    it 'does not validate' do
-      expect(stock).not_to be_valid
-    end
-  end
-
-  context 'when unit price is 0' do
-    before do
+    it 'invalidates zero' do
       stock.unit_price = 0
-    end
-
-    it 'does not validate' do
-      expect(stock).not_to be_valid
+      stock.valid?
+      expect(stock.errors[:unit_price].size).to eq(1)
     end
   end
 
-  context 'without shares' do
-    before do
+  describe '#shares' do
+    it 'invalidates null' do
       stock.shares = nil
+      stock.valid?
+      expect(stock.errors[:shares].size).to eq(2)
     end
 
-    it 'does not validate' do
-      expect(stock).not_to be_valid
-    end
-  end
-
-  context 'when shares are 0' do
-    before do
+    it 'invalidates zero' do
       stock.shares = 0
-    end
-
-    it 'does not validate' do
-      expect(stock).not_to be_valid
+      stock.valid?
+      expect(stock.errors[:shares].size).to eq(1)
     end
   end
 end
