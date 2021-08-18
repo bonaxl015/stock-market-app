@@ -8,7 +8,7 @@
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    - if !has_devise_controllers(controller.controller_name)
+    - if !devise_controllers?(controller.controller_name)
       = render 'layouts/header'
     = render 'layouts/devise_flash'
     = yield
