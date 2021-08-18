@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'SigningInUsers', type: :system do
-  shared_examples 'signs in user' do
+  shared_examples 'an admin signing in' do
     it 'signs in user' do
       expect(page).to have_content('Signed in successfully')
     end
@@ -24,15 +24,11 @@ RSpec.describe 'SigningInUsers', type: :system do
       find('input[type="submit"]').click
     end
 
-    include_examples 'signs in user'
-
-    it 'renders page with admin dashboard' do
-      expect(page).to have_content('Site Administration')
-    end
+    include_examples 'an admin signing in'
   end
 
-  context 'when user signing in is not admin (broker)' do
-    let(:create_broker_user) { create(:user, user_type: 'Broker') }
+  context 'when user signing in is not admin' do
+    let(:create_broker_user) { create(:user) }
 
     before do
       create_broker_user
@@ -44,30 +40,6 @@ RSpec.describe 'SigningInUsers', type: :system do
       find('input[type="submit"]').click
     end
 
-    include_examples 'signs in user'
-
-    it 'renders page with show stocks button' do
-      expect(page).to have_css('a[href="/stocks"]')
-    end
-  end
-
-  context 'when user signing in is not admin (buyer)' do
-    let(:create_buyer_user) { create(:user, user_type: 'Buyer') }
-
-    before do
-      create_buyer_user
-      visit root_path
-      find('a[href="/users/sign_in"]').click
-
-      fill_in 'user[email]', with: create_buyer_user.email
-      fill_in 'user[password]', with: create_buyer_user.password
-      find('input[type="submit"]').click
-    end
-
-    include_examples 'signs in user'
-
-    it 'renders page with show orders button' do
-      expect(page).to have_css('a[href="/orders/all"]')
-    end
+    it_behaves_like 'an admin signing in'
   end
 end
