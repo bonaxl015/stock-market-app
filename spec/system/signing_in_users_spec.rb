@@ -28,15 +28,15 @@ RSpec.describe 'SigningInUsers', type: :system do
   end
 
   context 'when user signing in is not admin' do
-    let(:create_broker_user) { create(:user) }
+    let(:create_user) { create(:user) }
 
     before do
-      create_broker_user
+      create_user
       visit root_path
       find('a[href="/users/sign_in"]').click
 
-      fill_in 'user[email]', with: create_broker_user.email
-      fill_in 'user[password]', with: create_broker_user.password
+      fill_in 'user[email]', with: create_user.email
+      fill_in 'user[password]', with: create_user.password
       find('input[type="submit"]').click
     end
 
