@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "SigningInUsers", type: :system do
+RSpec.describe 'SigningInUsers', type: :system do
   shared_examples 'signs in user' do
     it 'signs in user' do
       expect(page).to have_content('Signed in successfully')
