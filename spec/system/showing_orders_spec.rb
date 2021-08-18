@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "ShowingOrders", type: :system do
+RSpec.describe 'ShowingOrders', type: :system do
   let(:create_user) { create(:user, user_type: 'Buyer') }
   let(:create_order) { create(:order, user_id: create_user.id) }
   let(:show_button) { 'a[href="/orders/all"]' }

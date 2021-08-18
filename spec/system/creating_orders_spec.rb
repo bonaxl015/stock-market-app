@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "CreatingOrders", type: :system do
+RSpec.describe 'CreatingOrders', type: :system do
   let(:stock_shares) { Faker::Number.number(digits: 3) }
   let(:create_stock) { create(:stock, shares: stock_shares) }
   let(:buy_button) { "a[href='/stocks/#{create_stock.id}/orders/new']" }

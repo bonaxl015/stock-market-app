@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "SellingOrders", type: :system do
+RSpec.describe 'SellingOrders', type: :system do
   let(:create_user) { create(:user, user_type: 'Buyer') }
   let(:stock_shares) { Faker::Number.number(digits: 4) }
   let(:name) { Faker::Company.name }
