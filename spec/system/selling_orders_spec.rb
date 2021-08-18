@@ -2,14 +2,13 @@ require 'rails_helper'
 
 RSpec.describe 'SellingOrders', type: :system do
   let(:create_user) { create(:user, user_type: 'Buyer') }
-  let(:stock_shares) { Faker::Number.number(digits: 4) }
 
   let(:create_stock) do
-    create(:stock, shares: stock_shares)
+    create(:stock, shares: 1234)
   end
 
   let(:create_order) do
-    create(:order, shares: order_shares,
+    create(:order, shares: 123,
                   user_id: create_user.id,
                   stock_id: create_stock.id)
   end
@@ -21,9 +20,6 @@ RSpec.describe 'SellingOrders', type: :system do
   end
 
   context 'when user signed in is buyer' do
-    let(:order_shares) { Faker::Number.number(digits: 3) }
-    let(:sold_order_shares) { Faker::Number.number(digits: 2) }
-
     before do
       sign_in create_user
       create_stock
@@ -31,16 +27,16 @@ RSpec.describe 'SellingOrders', type: :system do
       visit orders_all_path
       find(sell_button).click
 
-      fill_in 'order[shares]', with: sold_order_shares
+      fill_in 'order[shares]', with: 12
       find('input[type="submit"]').click
     end
 
     it 'sells an order' do
-      expect(Order.find_by(stock_id: create_stock.id).shares).to eq(order_shares - sold_order_shares)
+      expect(Order.find_by(stock_id: create_stock.id).shares).to eq(123 - 12)
     end
 
     it 'increments its stock shares' do
-      expect(Stock.find_by(id: create_stock.id).shares).to eq(stock_shares + sold_order_shares)
+      expect(Stock.find_by(id: create_stock.id).shares).to eq(1234 + 12)
     end
   end
 
