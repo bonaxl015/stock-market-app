@@ -1,0 +1,14 @@
+.d-flex.justify-content-center.form-outer-container
+  .card.flex-column.shadow.p-3.mb-5.bg-secondary.rounded.form-card
+    .form-container
+      .form-title
+        %h2 Forgot Your Password?
+      .text-dark
+        = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+          = render "devise/shared/error_messages", resource: resource
+          .form-floating.mb-4
+            = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", id: "user_email", placeholder: "Email"
+            %label(for="floatingInput") Email
+          .actions.d-flex.justify-content-center
+            = f.submit "Send me reset password instructions", class: "btn btn-orange btn-margin btn-wide"
+        = render "devise/shared/links"
