@@ -7,27 +7,33 @@ html {
 body {
   position: relative;
   color: #FFF;
-  height: 100vh;
+  height: 100%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
 }
 
-.btn-navs {
+.btn-space {
   margin: 10px 10px;
-}
-
-.btn-peach {
-  background-color: #E58675;
-  color: #FFF;
-}
-
-.btn-purple {
-  background-color: #454380;
-  color: #FFF;
 }
 
 .btn-orange {
   background-color: #F2A76A;
   color: #FFF;
+  &:hover {
+      color: #FFF;
+  }
+}
+
+.market-container {
+  margin: 2rem auto;
+}
+
+.market-header {
+  margin: 2rem 0;
+}
+
+.stock-card {
+  width: 16rem;
 }
