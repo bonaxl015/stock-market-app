@@ -3,19 +3,15 @@ require 'rails_helper'
 RSpec.describe 'SellingOrders', type: :system do
   let(:create_user) { create(:user, user_type: 'Buyer') }
   let(:stock_shares) { Faker::Number.number(digits: 4) }
-  let(:name) { Faker::Company.name }
 
   let(:create_stock) do
-    create(:stock, name: name,
-                   shares: stock_shares)
+    create(:stock, shares: stock_shares)
   end
-
-  let(:order_shares) { Faker::Number.number(digits: 3) }
 
   let(:create_order) do
     create(:order, shares: order_shares,
-                   user_id: create_user.id,
-                   stock_id: create_stock.id)
+                  user_id: create_user.id,
+                  stock_id: create_stock.id)
   end
 
   let(:sell_button) { "a[href='/stocks/#{create_stock.id}/orders/#{create_order.id}/edit']" }
@@ -25,6 +21,7 @@ RSpec.describe 'SellingOrders', type: :system do
   end
 
   context 'when user signed in is buyer' do
+    let(:order_shares) { Faker::Number.number(digits: 3) }
     let(:sold_order_shares) { Faker::Number.number(digits: 2) }
 
     before do
@@ -43,7 +40,7 @@ RSpec.describe 'SellingOrders', type: :system do
     end
 
     it 'increments its stock shares' do
-      expect(Stock.find_by(name: name).shares).to eq(stock_shares + sold_order_shares)
+      expect(Stock.find_by(id: create_stock.id).shares).to eq(stock_shares + sold_order_shares)
     end
   end
 
