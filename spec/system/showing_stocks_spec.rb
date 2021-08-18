@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "ShowingStocks", type: :system do
+RSpec.describe 'ShowingStocks', type: :system do
   let(:create_user) { create(:user, user_type: 'Broker') }
   let(:create_stock) { create(:stock, user_id: create_user.id) }
   let(:stock) { Stock.find_by(user_id: create_user.id).name }

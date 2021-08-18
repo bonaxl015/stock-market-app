@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "DeletingStocks", type: :system do
+RSpec.describe 'DeletingStocks', type: :system do
   let(:name) { Faker::Company.unique.name }
   let(:create_stock) { create(:stock, name: name) }
   let(:delete_button) { "a[href='/stocks/#{create_stock.id}'][data-method='delete']" }
