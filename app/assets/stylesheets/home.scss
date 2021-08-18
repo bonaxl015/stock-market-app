@@ -5,9 +5,8 @@ html {
 }
 
 body {
-    position: relative;
     color: #FFF;
-    height: 100vh;
+    height: 100%;
     background-image: url("/bg-stock.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -15,11 +14,10 @@ body {
 }
 
 .home-container {
-    position: absolute;
     height: 300px;
     width: 600px;
-    top: 35%;
-    left: 4%;
+    margin-top: 14rem;
+    margin-left: 5rem;
 }
 
 .title {
@@ -35,21 +33,14 @@ body {
     margin: 30px 0;
 }
 
-.btn-navs {
+.btn-space {
     margin: 10px 10px;
-}
-
-.btn-peach {
-    background-color: #E58675;
-    color: #FFF;
-}
-
-.btn-purple {
-    background-color: #454380;
-    color: #FFF;
 }
 
 .btn-orange {
     background-color: #F2A76A;
     color: #FFF;
+    &:hover {
+        color: #FFF;
+    }
 }
