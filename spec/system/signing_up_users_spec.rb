@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "SigningUpUsers", type: :system do
+RSpec.describe 'SigningUpUsers', type: :system do
   let(:email) { Faker::Internet.unique.email }
   let(:password) { Faker::Internet.password }
   let(:click_signup_button) { find('input[type="submit"]').click }
