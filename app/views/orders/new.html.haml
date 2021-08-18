@@ -1,7 +1,8 @@
 .d-flex.justify-content-center
-  .card.flex-column.shadow.p-3.mb-5.bg-secondary.rounded
-    .container
-      %div
-        %h2 Buy Stocks
-      .text-dark
-        = render "form", stock: @stock
+  .card.flex-column.shadow.p-3.mb-5.bg-secondary.rounded.order-form-outer-container
+    .form-container.order-form-card
+      .form-title
+        %div
+          %h2 Buy Stocks
+        .text-dark
+          = render "form", stock: @stock

@@ -1,13 +1,15 @@
-.container.card.shadow.p-3.mb-5.bg-secondary.rounded
-  .d-flex.justify-content-between.align-items-center
-    %h1 My Orders
-    = link_to "Back", stocks_market_path, class: "btn btn-danger"
-  %table.table.table-light
+.container.card.shadow.p-3.mb-5.bg-secondary.rounded.market-container
+  .d-flex.justify-content-between.align-items-center.market-header.container
+    %div
+      %h1 My Orders
+    .d-flex.justify-content-evenly.align-items-center
+      = link_to "Back", stocks_market_path, class: "btn btn-danger"
+  %table.table.table-light.center
     %thead
       %tr
         %th{:scope => "col"} Stock Name
         %th{:scope => "col"} Price Per Share
-        %th{:scope => "col"} Number of Shares
+        %th{:scope => "col"} Shares Owned
         %th{:scope => "col"} Actions 
     %tbody 
       - @user_orders.each do |user_order|
