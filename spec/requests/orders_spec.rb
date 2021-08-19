@@ -30,7 +30,7 @@ RSpec.describe 'Orders', type: :request do
 
     it 'raises an error' do
       expect do
-        get stock_orders_url(stock)
+        get stock_orders_path(stock)
       end.to raise_error(ActionController::RoutingError)
     end
   end
@@ -39,7 +39,7 @@ RSpec.describe 'Orders', type: :request do
     include_context 'when user signed in'
 
     before do
-      get orders_all_url
+      get orders_all_path
     end
 
     include_examples 'renders a successful response'
@@ -50,7 +50,7 @@ RSpec.describe 'Orders', type: :request do
 
     it 'raises an error' do
       expect do
-        get stock_order_url(stock, order)
+        get stock_order_path(stock, order)
       end.to raise_error(ActionController::RoutingError)
     end
   end
@@ -59,8 +59,20 @@ RSpec.describe 'Orders', type: :request do
     include_context 'when user signed in'
 
     before do
-      get new_stock_order_url(stock)
+      get new_stock_order_path(stock)
     end
+
+    include_examples 'renders a successful response'
+  end
+
+  describe 'GET /edit' do
+    include_context 'when user signed in'
+
+    before do
+      get edit_stock_order_path(stock, order)
+    end
+
+    include_examples 'renders a successful response'
   end
 
   describe 'POST /create' do
@@ -68,17 +80,17 @@ RSpec.describe 'Orders', type: :request do
 
     context 'with valid parameters' do
       before do
-        post stock_orders_url(stock), params: { order: valid_attributes }
+        post stock_orders_path(stock), params: { order: valid_attributes }
       end
 
       it 'redirects to all orders' do
-        expect(response).to redirect_to(orders_all_url)
+        expect(response).to redirect_to(orders_all_path)
       end
     end
 
     context 'with invalid parameters' do
       before do
-        post stock_orders_url(stock), params: { order: invalid_attributes }
+        post stock_orders_path(stock), params: { order: invalid_attributes }
       end
 
       include_examples 'renders unprocessable entity response'
@@ -92,7 +104,7 @@ RSpec.describe 'Orders', type: :request do
       let(:new_attributes) { attr_strat(:order, :new_attributes) }
 
       before do
-        patch stock_order_url(stock, order), params: { order: new_attributes }
+        patch stock_order_path(stock, order), params: { order: new_attributes }
       end
 
       it 'redirects to all orders' do
@@ -102,7 +114,7 @@ RSpec.describe 'Orders', type: :request do
 
     context 'with invalid parameters' do
       before do
-        patch stock_order_url(stock, order), params: { order: invalid_attributes }
+        patch stock_order_path(stock, order), params: { order: invalid_attributes }
       end
 
       include_examples 'renders unprocessable entity response'
@@ -114,7 +126,7 @@ RSpec.describe 'Orders', type: :request do
 
     it 'raises an error' do
       expect do
-        delete stock_order_url(stock, order)
+        delete stock_order_path(stock, order)
       end.to raise_error(ActionController::RoutingError)
     end
   end
@@ -129,22 +141,30 @@ RSpec.describe 'Orders', type: :request do
     describe 'GET /index' do
       it 'raises an error' do
         expect do
-          get stock_orders_url(stock)
+          get stock_orders_path(stock)
         end.to raise_error(ActionController::RoutingError)
       end
+    end
+
+    describe 'GET /all' do
+      before do
+        get orders_all_path
+      end
+
+      include_examples 'redirects to log in'
     end
 
     describe 'GET /show' do
       it 'raises an error' do
         expect do
-          get stock_order_url(stock, order)
+          get stock_order_path(stock, order)
         end.to raise_error(ActionController::RoutingError)
       end
     end
 
     describe 'GET /new' do
       before do
-        get new_stock_order_url(stock)
+        get new_stock_order_path(stock)
       end
 
       include_examples 'redirects to log in'
@@ -152,7 +172,7 @@ RSpec.describe 'Orders', type: :request do
 
     describe 'GET /edit' do
       before do
-        get edit_stock_order_url(stock, order)
+        get edit_stock_order_path(stock, order)
       end
 
       include_examples 'redirects to log in'

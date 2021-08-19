@@ -24,7 +24,7 @@ RSpec.describe 'ShowingStocks', type: :system do
 
     include_examples 'a broker'
 
-    it 'can show its own stocks' do
+    it 'shows its own stocks' do
       visit stocks_market_path
       find('a[href="/stocks"]').click
       expect(page).to have_content(stock)
