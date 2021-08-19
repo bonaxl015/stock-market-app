@@ -26,7 +26,7 @@ RSpec.describe 'Stocks', type: :request do
 
   shared_examples 'redirects to the stocks market' do
     it 'redirects to the stocks market' do
-      expect(response).to redirect_to(stocks_market_url)
+      expect(response).to redirect_to(stocks_market_path)
     end
   end
 
@@ -34,7 +34,17 @@ RSpec.describe 'Stocks', type: :request do
     include_context 'when user signed in'
 
     before do
-      get stocks_url
+      get stocks_path
+    end
+
+    include_examples 'renders a successful response'
+  end
+
+  describe 'GET /market' do
+    include_context 'when user signed in'
+
+    before do
+      get stocks_market_path
     end
 
     include_examples 'renders a successful response'
@@ -45,7 +55,7 @@ RSpec.describe 'Stocks', type: :request do
 
     it 'raises error' do
       expect do
-        get stock_url(stock)
+        get stock_path(stock)
       end.to raise_error(ActionController::RoutingError)
     end
   end
@@ -54,7 +64,7 @@ RSpec.describe 'Stocks', type: :request do
     include_context 'when user signed in'
 
     before do
-      get new_stock_url
+      get new_stock_path
     end
 
     include_examples 'renders a successful response'
@@ -64,7 +74,7 @@ RSpec.describe 'Stocks', type: :request do
     include_context 'when user signed in'
 
     before do
-      get edit_stock_url(stock)
+      get edit_stock_path(stock)
     end
 
     include_examples 'renders a successful response'
@@ -75,7 +85,7 @@ RSpec.describe 'Stocks', type: :request do
 
     context 'with valid parameters' do
       before do
-        post stocks_url, params: { stock: valid_attributes }
+        post stocks_path, params: { stock: valid_attributes }
       end
 
       include_examples 'redirects to the stocks market'
@@ -83,7 +93,7 @@ RSpec.describe 'Stocks', type: :request do
 
     context 'with invalid parameters' do
       before do
-        post stocks_url, params: { stock: invalid_attributes }
+        post stocks_path, params: { stock: invalid_attributes }
       end
 
       include_examples 'renders unprocessable entity response'
@@ -97,7 +107,7 @@ RSpec.describe 'Stocks', type: :request do
       let(:new_attributes) { attr_strat(:stock, :new_attributes) }
 
       before do
-        patch stock_url(stock), params: { stock: new_attributes }
+        patch stock_path(stock), params: { stock: new_attributes }
       end
 
       include_examples 'redirects to the stocks market'
@@ -105,7 +115,7 @@ RSpec.describe 'Stocks', type: :request do
 
     context 'with invalid parameters' do
       before do
-        patch stock_url(stock), params: { stock: invalid_attributes }
+        patch stock_path(stock), params: { stock: invalid_attributes }
       end
 
       include_examples 'renders a successful response'
@@ -116,7 +126,7 @@ RSpec.describe 'Stocks', type: :request do
     include_context 'when user signed in'
 
     before do
-      delete stock_url(stock)
+      delete stock_path(stock)
     end
 
     include_examples 'redirects to the stocks market'
@@ -131,23 +141,32 @@ RSpec.describe 'Stocks', type: :request do
 
     describe 'GET /index' do
       before do
-        get stocks_url
+        get stocks_path
       end
 
       include_examples 'redirects to log in'
     end
 
+    describe 'GET /market' do
+      before do
+        get stocks_market_path
+      end
+
+      include_examples 'redirects to log in'
+    end
+
+
     describe 'GET /show' do
       it 'raises error' do
         expect do
-          get stock_url(stock)
+          get stock_path(stock)
         end.to raise_error(ActionController::RoutingError)
       end
     end
 
     describe 'GET /new' do
       before do
-        get new_stock_url
+        get new_stock_path
       end
 
       include_examples 'redirects to log in'
@@ -155,7 +174,7 @@ RSpec.describe 'Stocks', type: :request do
 
     describe 'GET /edit' do
       before do
-        get edit_stock_url(stock)
+        get edit_stock_path(stock)
       end
 
       include_examples 'redirects to log in'
