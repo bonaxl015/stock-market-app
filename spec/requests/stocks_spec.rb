@@ -155,7 +155,6 @@ RSpec.describe 'Stocks', type: :request do
       include_examples 'redirects to log in'
     end
 
-
     describe 'GET /show' do
       it 'raises error' do
         expect do
