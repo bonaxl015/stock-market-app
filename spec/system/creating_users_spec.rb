@@ -18,7 +18,7 @@ RSpec.describe 'CreatingUsers', type: :system do
       fill_in 'user[password]', with: password
       fill_in 'user[password_confirmation]', with: password
       fill_in 'user[username]', with: Faker::Lorem.unique.characters(number: 6)
-      fill_in 'user[user_type]', with: 'Broker'
+      select 'Broker', from: 'user[user_type]'
       find('button[name="_save"]').click
     end
 
