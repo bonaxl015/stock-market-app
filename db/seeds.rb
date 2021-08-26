@@ -2,19 +2,29 @@ admin = User.create(email: 'admin@example.com',
                     password: 'testtest',
                     password_confirmation: 'testtest',
                     username: 'adminpogi',
-                    user_type: 'Admin')
+                    user_type: 'Admin',
+                    approved: true)
 
 broker = User.create(email: 'broker@example.com',
                      password: 'testtest',
                      password_confirmation: 'testtest',
                      username: 'brokerpogi',
-                     user_type: 'Broker')
+                     user_type: 'Broker',
+                     approved: true)
+
+broker2 = User.create(email: 'broker2@example.com',
+                      password: 'testtest',
+                      password_confirmation: 'testtest',
+                      username: 'brokerpogi2',
+                      user_type: 'Broker',
+                      approved: false)
 
 buyer = User.create(email: 'buyer@example.com',
                     password: 'testtest',
                     password_confirmation: 'testtest',
                     username: 'buyerpogi',
-                    user_type: 'Buyer')
+                    user_type: 'Buyer',
+                    approved: true)
 
 stock1 = Stock.create(name: 'Aerotyne International',
                       unit_price: 5.12,
