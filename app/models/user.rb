@@ -15,4 +15,24 @@ class User < ApplicationRecord
     self.approved = user_type != 'Broker'
     skip_confirmation! if approved
   end
+
+  RailsAdmin.config do |config|
+    config.model User do
+      edit do
+        configure :user_type, :enum do
+          enum do
+            [['Broker'], ['Buyer']]
+          end
+        end
+
+        configure :reset_password_sent_at do
+          hide
+        end
+
+        configure :remember_created_at do
+          hide
+        end
+      end
+    end
+  end
 end
