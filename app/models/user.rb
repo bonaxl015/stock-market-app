@@ -12,7 +12,7 @@ class User < ApplicationRecord
   before_save :require_confirmation
 
   def require_confirmation
-    self.approved = user_type == 'Broker' ? false : true
-    self.skip_confirmation! if self.approved == true
+    self.approved = !(user_type == 'Broker')
+    self.skip_confirmation! if approved
   end
 end
