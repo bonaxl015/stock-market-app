@@ -22,7 +22,7 @@ class User < ApplicationRecord
   end
 
   def registration_notification
-    UserMailer.success_notification(self).deliver if self.approved
+    UserMailer.success_notification(self).deliver if approved
   end
 
   RailsAdmin.config do |config|
