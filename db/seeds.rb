@@ -12,7 +12,7 @@ broker = User.new(email: 'broker@example.com',
                      user_type: 'Broker',
                      confirmed_at: Date.today,
                      approved: true)
-broker.skip_confirmation
+broker.skip_confirmation!
 broker.save
 
 broker2 = User.create(email: 'broker2@example.com',
