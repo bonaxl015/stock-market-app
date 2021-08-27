@@ -13,7 +13,7 @@ class User < ApplicationRecord
   after_create :registration_notification
 
   def update_buyer
-    self.approved = true if user_type == 'Buyer' 
+    self.approved = true if user_type == 'Buyer'
     skip_confirmation! if approved
   end
 
