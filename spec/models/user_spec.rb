@@ -72,4 +72,20 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  context 'when user is broker' do
+    it 'sends email' do
+      expect do
+        user.after_confirmation
+      end.to change { ActionMailer::Base.deliveries.count }.by(2)
+    end
+  end
+
+  context 'when user is not broker (buyer)' do
+    it 'sends email' do
+      expect do
+        user.registration_notification
+      end.to change { ActionMailer::Base.deliveries.count }.by(2)
+    end
+  end
 end
