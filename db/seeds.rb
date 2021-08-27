@@ -6,12 +6,12 @@ admin = User.create(email: 'admin@example.com',
                     approved: true)
 
 broker = User.new(email: 'broker@example.com',
-                     password: 'testtest',
-                     password_confirmation: 'testtest',
-                     username: 'brokerpogi',
-                     user_type: 'Broker',
-                     confirmed_at: Date.today,
-                     approved: true)
+                  password: 'testtest',
+                  password_confirmation: 'testtest',
+                  username: 'brokerpogi',
+                  user_type: 'Broker',
+                  confirmed_at: Date.today,
+                  approved: true)
 broker.skip_confirmation!
 broker.save
 
