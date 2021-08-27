@@ -5,12 +5,15 @@ admin = User.create(email: 'admin@example.com',
                     user_type: 'Admin',
                     approved: true)
 
-broker = User.create(email: 'broker@example.com',
+broker = User.new(email: 'broker@example.com',
                      password: 'testtest',
                      password_confirmation: 'testtest',
                      username: 'brokerpogi',
                      user_type: 'Broker',
+                     confirmed_at: Date.today,
                      approved: true)
+broker.skip_confirmation
+broker.save
 
 broker2 = User.create(email: 'broker2@example.com',
                       password: 'testtest',
