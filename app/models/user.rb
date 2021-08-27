@@ -9,7 +9,7 @@ class User < ApplicationRecord
                        format: { with: /\A[A-Za-z0-9]+\z/ }
   has_many :stocks, dependent: :destroy
   has_many :orders, dependent: :destroy
-  before_save :require_confirmation
+  after_save :require_confirmation
   after_create :registration_notification
 
   def require_confirmation
