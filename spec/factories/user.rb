@@ -5,7 +5,7 @@ FactoryBot.define do
     username { Faker::Lorem.unique.characters(number: 6) }
     user_type { Faker::Lorem.characters(number: 5) }
     approved { true }
-    confirmed_at { Date.today }
+    confirmed_at { Time.zone.today }
 
     trait :invalid_attributes do
       email { nil }
