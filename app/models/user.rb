@@ -9,11 +9,11 @@ class User < ApplicationRecord
                        format: { with: /\A[A-Za-z0-9]+\z/ }
   has_many :stocks, dependent: :destroy
   has_many :orders, dependent: :destroy
-  before_save :require_confirmation
+  before_save :update_buyer
   after_create :registration_notification
 
-  def require_confirmation
-    self.approved = user_type != 'Broker'
+  def update_buyer
+    self.approved = true if user_type == 'Buyer'
     skip_confirmation! if approved
   end
 
