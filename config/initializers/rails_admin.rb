@@ -40,4 +40,22 @@ RailsAdmin.config do |config|
     # history_index
     # history_show
   end
+
+  config.model User do
+    edit do
+      configure :user_type, :enum do
+        enum do
+          [['Broker'], ['Buyer']]
+        end
+      end
+
+      configure :reset_password_sent_at do
+        hide
+      end
+
+      configure :remember_created_at do
+        hide
+      end
+    end
+  end
 end
