@@ -1,5 +1,5 @@
-%p Welcome #{@email}
-
-%p Please confirm your email through the link below:
-
-= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token)
+%h2 Hi #{@email}
+%p You're one click away to become one of our partners.
+%span Please click Confirm Email to verify your account.
+%span We are looking forward for you to be one of our brokers!
+%p= link_to 'Confirm Email', confirmation_url(@resource, confirmation_token: @token)
