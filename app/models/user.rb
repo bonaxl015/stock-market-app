@@ -10,10 +10,19 @@ class User < ApplicationRecord
   has_many :stocks, dependent: :destroy
   has_many :orders, dependent: :destroy
   before_save :require_confirmation
+  after_create :registration_notification
 
   def require_confirmation
     self.approved = user_type != 'Broker'
     skip_confirmation! if approved
+  end
+
+  def after_confirmation
+    UserMailer.success_notification(self).deliver
+  end
+
+  def registration_notification
+    UserMailer.success_notification(self).deliver if self.approved
   end
 
   RailsAdmin.config do |config|
