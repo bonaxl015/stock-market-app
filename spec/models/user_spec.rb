@@ -73,7 +73,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  context 'when user is broker and not approved' do
+  context 'when user is broker but not approved' do
     let(:not_approved_broker_user) { create(:user, user_type: 'Broker', approved: false) }
 
     before do
@@ -87,21 +87,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  context 'when user is broker and approved' do
-    let(:approved_broker_user) { create(:user, user_type: 'Broker') }
-
-    before do
-      approved_broker_user.skip_confirmation!
-    end
-
-    it 'sends successful registration email' do
-      expect do
-        approved_broker_user.registration_notification
-      end.to change { ActionMailer::Base.deliveries.count }.by(1)
-    end
-  end
-
-  context 'when user is not broker (buyer)' do
+  context 'when user is not broker (buyer) or broker but approved' do
     before do
       user.skip_confirmation!
     end
