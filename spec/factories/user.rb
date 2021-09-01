@@ -6,6 +6,7 @@ FactoryBot.define do
     user_type { Faker::Lorem.characters(number: 5) }
     approved { true }
     confirmed_at { Time.zone.today }
+    money { Faker::Number.number(digits: 7) }
 
     trait :invalid_attributes do
       email { nil }
@@ -14,6 +15,7 @@ FactoryBot.define do
       user_type { nil }
       approved { nil }
       confirmed_at { nil }
+      money { nil }
     end
   end
 end
