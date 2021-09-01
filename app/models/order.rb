@@ -13,7 +13,7 @@ class Order < ApplicationRecord
     return if shares.nil? || unit_price.nil?
 
     order_price = shares * unit_price
-    buyer_money = self.user.money
+    buyer_money = user.money
 
     errors.add(:shares, 'You cannot afford that number of shares.') if order_price > buyer_money
   end
