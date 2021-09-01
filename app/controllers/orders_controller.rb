@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
-        process_buy_stock(@order.shares, @stock.id)
+        process_buy_stock(current_user.id, @order.shares, @stock.id)
         format.html { redirect_to orders_all_path, notice: 'Stock was successfully ordered.' }
         format.json { render :all, status: :created, location: @order.stock }
       else
@@ -31,7 +31,7 @@ class OrdersController < ApplicationController
     @current_shares = @order.shares
     respond_to do |format|
       if @order.update(order_params)
-        process_sell_stock(@stock.id, @order.id, @current_shares)
+        process_sell_stock(@stock.id, current_user.id, @order.id, @current_shares)
         format.html { redirect_to orders_all_path, notice: 'Stock was successfully sold.' }
         format.json { render :all, status: :created, location: @order.stock }
       else
