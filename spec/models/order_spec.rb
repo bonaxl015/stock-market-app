@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
-  subject(:order) do create(:order,
-                            shares: 1,
-                            unit_price: stock.unit_price,
-                            user_id: buyer.id,
-                            stock_id: stock.id)
+  subject(:order) do
+    create(:order,
+           shares: 1,
+           unit_price: stock.unit_price,
+           user_id: buyer.id,
+           stock_id: stock.id)
   end
 
   let(:buyer) { create(:user, money: 100) }
