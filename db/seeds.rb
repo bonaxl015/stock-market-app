@@ -34,7 +34,6 @@ buyer = User.create(email: 'buyer@example.com',
                     password_confirmation: 'testtest',
                     username: 'buyerpogi',
                     user_type: 'Buyer',
-                    money: 1000,
                     approved: true,
                     money: 10000)
 
