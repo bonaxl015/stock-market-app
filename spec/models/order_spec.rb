@@ -1,4 +1,4 @@
-# require 'rails_helper'
+require 'rails_helper'
 
 RSpec.describe Order, type: :model do
   subject(:order) do
@@ -9,6 +9,13 @@ RSpec.describe Order, type: :model do
 
   let(:buyer) { create(:user, money: 100) }
   let(:stock) { create(:stock) }
+
+  let(:new_order) do
+    Order.new(name: Faker::Company.name,
+              unit_price: Faker::Number.between(from: 1, to: 10),
+              user_id: buyer.id,
+              stock_id: stock.id )
+  end
 
   it 'belongs to user' do
     expect(described_class.reflect_on_association(:user).macro).to eq :belongs_to
@@ -58,16 +65,16 @@ RSpec.describe Order, type: :model do
     end
 
     it 'invalidates purchase less than money' do
-      order.shares = stock.shares
-      order.valid?
-      expect(order.errors[:shares].size).to eq(1)
+      new_order.shares = stock.shares
+      new_order.valid?
+      expect(new_order.errors[:shares].size).to eq(1)
     end
 
     it 'invalidates purchase greater than stock shares' do
       buyer.money = order.shares = 10**9
       buyer.save
       order.valid?
-      expect(order.errors[:shares].size).to eq(2)
+      expect(order.errors[:shares].size).to eq(1)
     end
   end
 end
