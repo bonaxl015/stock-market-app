@@ -1,10 +1,11 @@
 .container.card.shadow.p-3.mb-5.bg-secondary.rounded.market-container
   .d-flex.justify-content-between.align-items-center.market-header.container
     %div
-      %h1 All Stocks
+      %h2 All Stocks
     .d-flex.justify-content-evenly.align-items-center
       - if current_user.user_type == 'Buyer'
-        = link_to "View Your Orders", orders_all_path, class: "btn btn-orange"
+        = link_to "My Portfolio", orders_all_path, class: "btn btn-orange btn-space"
+        = link_to "Top Up", stocks_top_up_path, class: "btn btn-orange btn-space"
       - if current_user.user_type == 'Broker'
         = link_to "Add New Stock", new_stock_path, class: "btn btn-orange btn-space"
         = link_to "View Your Stocks", stocks_path, class: "btn btn-orange btn-space"

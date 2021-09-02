@@ -2,7 +2,12 @@
   .card.flex-column.shadow.p-3.mb-5.bg-secondary.rounded.order-form-outer-container
     .form-container.order-form-card
       .form-title
-        %div
-          %h2 Buy Stocks
-        .text-dark
-          = render "form", stock: @stock
+        - if @stock_limit < 1
+          %div
+            %h4 You don't have enough balance to buy a stock. Please top up first before buying again.
+            = link_to "Back", stocks_market_path, class: "btn btn-danger"
+        - else
+          %div
+            %h2 Buy Stocks
+          .text-dark
+            = render "form", stock: @stock

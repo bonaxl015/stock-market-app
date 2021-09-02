@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def update_user_status(email)
-    user_update = User.find_by(email: email)
-    user_update.update(approved: true)
+    user = User.find_by(email: email)
+    user.update(approved: true)
   end
 end

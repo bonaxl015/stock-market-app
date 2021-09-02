@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   root to: 'home#index'
   get 'home/index'
   get 'stocks/market'
+  get 'stocks/top_up'
+  post 'stocks/add_money'
   get 'orders/all'
   devise_for :users, controllers: { registrations: 'registrations' }
   resources :stocks, except: [:show] do

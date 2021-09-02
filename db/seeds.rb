@@ -1,9 +1,14 @@
+Order.delete_all
+Stock.delete_all
+User.delete_all
+
 admin = User.create(email: 'admin@example.com',
                     password: 'testtest',
                     password_confirmation: 'testtest',
                     username: 'adminpogi',
                     user_type: 'Admin',
-                    approved: true)
+                    approved: true,
+                    money: 0)
 
 broker = User.new(email: 'broker@example.com',
                   password: 'testtest',
@@ -11,7 +16,8 @@ broker = User.new(email: 'broker@example.com',
                   username: 'brokerpogi',
                   user_type: 'Broker',
                   confirmed_at: Date.today,
-                  approved: true)
+                  approved: true,
+                  money: 10000)
 broker.skip_confirmation!
 broker.save
 
@@ -20,15 +26,16 @@ broker2 = User.create(email: 'broker2@example.com',
                       password_confirmation: 'testtest',
                       username: 'brokerpogi2',
                       user_type: 'Broker',
-                      approved: false)
+                      approved: false,
+                      money: 20000)
 
 buyer = User.create(email: 'buyer@example.com',
                     password: 'testtest',
                     password_confirmation: 'testtest',
                     username: 'buyerpogi',
                     user_type: 'Buyer',
-                    money: 1000,
-                    approved: true)
+                    approved: true,
+                    money: 10000)
 
 stock1 = Stock.create(name: 'Aerotyne International',
                       unit_price: 5.12,

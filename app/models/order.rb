@@ -7,7 +7,8 @@ class Order < ApplicationRecord
                          numericality: { greater_than: 0 }
   validates :shares, presence: true,
                      numericality: { greater_than: 0 }
-  validate :check_money
+
+  validate :check_money, on: :create
   validate :check_shares
 
   def check_money

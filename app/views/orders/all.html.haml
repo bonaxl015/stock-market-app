@@ -1,15 +1,31 @@
 .container.card.shadow.p-3.mb-5.bg-secondary.rounded.market-container
   .d-flex.justify-content-between.align-items-center.market-header.container
     %div
-      %h1 My Orders
+      %h2 My Portfolio
     .d-flex.justify-content-evenly.align-items-center
       = link_to "Back", stocks_market_path, class: "btn btn-danger"
+  %table.table.table-light.center
+    %thead
+      %tr
+        %th{:scope => "col"} User Name
+        %th{:scope => "col"} Email
+        %th{:scope => "col"} Current Balance
+        %th{:scope => "col"} Total Invested Amount
+    %tbody
+      %tr
+        %td= current_user.username
+        %td= current_user.email
+        %td= current_user.money.round(2)
+        %td= @total_invested 
+  .d-flex.justify-content-between.align-items-center.market-header.container
+    %h2 My Stocks
   %table.table.table-light.center
     %thead
       %tr
         %th{:scope => "col"} Stock Name
         %th{:scope => "col"} Price Per Share
         %th{:scope => "col"} Shares Owned
+        %th{:scope => "col"} Amount
         %th{:scope => "col"} Actions 
     %tbody 
       - @user_orders.each do |user_order|
@@ -17,4 +33,5 @@
           %td= user_order.name
           %td= user_order.unit_price
           %td= user_order.shares
+          %td= (user_order.shares * user_order.unit_price).round(2)
           %td= link_to "Sell", edit_stock_order_path(user_order.stock, user_order), class: "btn btn-danger"
