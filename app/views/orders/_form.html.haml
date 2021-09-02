@@ -7,7 +7,7 @@
     %label(for="floatingInput") Stock Price
   .form-floating.mb-4
     - if params[:action] == 'new'
-      = f.number_field :shares, in: 1..@stock.shares, step: 1, class: "form-control", id: "shares", placeholder: "Number of Shares"
+      = f.number_field :shares, in: 1..@stock_limit, step: 1, class: "form-control", id: "shares", placeholder: "Number of Shares"
     - elsif params[:action] == 'edit'
       = f.number_field :shares, in: 1..@order.shares, step: 1, class: "form-control", id: "shares", placeholder: "Number of Shares"
     %label(for="floatingInput") Number of Shares

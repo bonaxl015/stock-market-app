@@ -1,6 +1,7 @@
 class StocksController < ApplicationController
   before_action :authenticate_user!
   before_action :find_stock, only: %i[edit update destroy]
+  include StocksHelper
 
   def index
     @user_stocks = Stock.where(user_id: current_user.id)
@@ -47,7 +48,21 @@ class StocksController < ApplicationController
   end
 
   def market
-    @stocks = Stock.all
+    @stocks = Stock.all.order(:name)
+  end
+
+  def top_up; end
+
+  def add_money
+    respond_to do |format|
+      if process_top_up(params[:money])
+        format.html { redirect_to stocks_market_path, notice: 'Topped up successfully' }
+        format.json { head :no_content }
+      else
+        format.html { render :top_up, status: :unprocessable_entity }
+        format.json { render json: @stock.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private

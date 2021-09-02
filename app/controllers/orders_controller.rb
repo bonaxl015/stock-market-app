@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
   include OrdersHelper
 
   def new
+    @stock_limit = (current_user.money / @stock.unit_price).floor
     @order = @stock.orders.build
   end
 
@@ -42,7 +43,8 @@ class OrdersController < ApplicationController
   end
 
   def all
-    @user_orders = Order.where(user_id: current_user.id)
+    @user_orders = Order.where(user_id: current_user.id).order(:name)
+    @total_invested = calculate_investments(@user_orders)
   end
 
   private
