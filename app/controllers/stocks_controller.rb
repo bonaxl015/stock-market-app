@@ -55,7 +55,7 @@ class StocksController < ApplicationController
 
   def add_money
     respond_to do |format|
-      if process_top_up(params[:money])    
+      if process_top_up(params[:money])
         format.html { redirect_to stocks_market_path, notice: 'Topped up successfully' }
         format.json { head :no_content }
       else
