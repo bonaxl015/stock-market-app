@@ -3,14 +3,12 @@ require 'rails_helper'
 RSpec.describe Order, type: :model do
   subject(:order) do
     create(:order,
-           shares: 1,
-           unit_price: stock.unit_price,
            user_id: buyer.id,
            stock_id: stock.id)
   end
 
   let(:buyer) { create(:user, money: 100) }
-  let(:stock) { create(:stock, unit_price: 10) }
+  let(:stock) { create(:stock) }
 
   it 'belongs to user' do
     expect(described_class.reflect_on_association(:user).macro).to eq :belongs_to
@@ -59,9 +57,17 @@ RSpec.describe Order, type: :model do
       expect(order.errors[:shares].size).to eq(1)
     end
 
-    it 'invalidates share purchase less than money' do
-      order.shares = 100
-      expect(order).not_to be_valid
+    it 'invalidates purchase less than money' do
+      order.shares = stock.shares
+      order.valid?
+      expect(order.errors[:shares].size).to eq(1)
+    end
+
+    it 'invalidates purchase greater than stock shares' do
+      buyer.money = order.shares = 10**9
+      buyer.save
+      order.valid?
+      expect(order.errors[:shares].size).to eq(2)
     end
   end
 end
