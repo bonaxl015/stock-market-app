@@ -11,10 +11,10 @@ RSpec.describe Order, type: :model do
   let(:stock) { create(:stock) }
 
   let(:new_order) do
-    Order.new(name: Faker::Company.name,
-              unit_price: Faker::Number.between(from: 1, to: 10),
-              user_id: buyer.id,
-              stock_id: stock.id )
+    described_class.new(name: Faker::Company.name,
+                        unit_price: Faker::Number.between(from: 1, to: 10),
+                        user_id: buyer.id,
+                        stock_id: stock.id)
   end
 
   it 'belongs to user' do
