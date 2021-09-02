@@ -7,6 +7,8 @@ class User < ApplicationRecord
                        uniqueness: { case_sensitive: false },
                        length: { minimum: 6 },
                        format: { with: /\A[A-Za-z0-9]+\z/ }
+  validates :money, presence: true,
+                    numericality: { greater_than_or_equal_to: 0 }
   has_many :stocks, dependent: :destroy
   has_many :orders, dependent: :destroy
   before_save :update_buyer
