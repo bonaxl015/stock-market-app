@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :stock do
     name { Faker::Company.unique.name }
-    unit_price { Faker::Number.between(from: 10, to: 99) }
+    unit_price { Faker::Number.between(from: 1, to: 10) }
     shares { Faker::Number.number(digits: 6) }
     association :user
 
@@ -14,7 +14,7 @@ FactoryBot.define do
 
     trait :new_attributes do
       name { Faker::Company.unique.name }
-      unit_price { Faker::Number.number(digits: 4) }
+      unit_price { Faker::Number.between(from: 1, to: 10) }
       shares { Faker::Number.number(digits: 5) }
       association :user
     end
