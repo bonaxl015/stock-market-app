@@ -21,8 +21,7 @@ RSpec.describe 'SellingOrders', type: :system do
 
   context 'when user signed in is buyer' do
     let(:updated_money) do
-      create_user.money +
-      (Order.find_by(stock_id: create_stock.id).unit_price * 12)
+      create_user.money + (Order.find_by(stock_id: create_stock.id).unit_price * 12)
     end
 
     before do

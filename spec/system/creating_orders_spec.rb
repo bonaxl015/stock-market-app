@@ -13,8 +13,7 @@ RSpec.describe 'CreatingOrders', type: :system do
     let(:order_shares) { Faker::Number.number(digits: 2) }
 
     let(:remaining_money) do
-      create_user.money -
-      (Order.find_by(stock_id: create_stock.id).unit_price * order_shares)
+      create_user.money - (Order.find_by(stock_id: create_stock.id).unit_price * order_shares)
     end
 
     before do
