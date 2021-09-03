@@ -50,6 +50,16 @@ RSpec.describe 'Stocks', type: :request do
     include_examples 'renders a successful response'
   end
 
+  describe 'GET /top_up' do
+    include_context 'when user signed in'
+
+    before do
+      get stocks_top_up_path
+    end
+
+    include_examples 'renders a successful response'
+  end
+
   describe 'GET /show' do
     include_context 'when user signed in'
 
@@ -97,6 +107,26 @@ RSpec.describe 'Stocks', type: :request do
       end
 
       include_examples 'renders unprocessable entity response'
+    end
+  end
+
+  describe 'POST /add_money' do
+    include_context 'when user signed in'
+
+    context 'with valid parameters' do
+      before do
+        post stocks_add_money_path, params: { money: Faker::Number.number(digits: 5) }
+      end
+
+      include_examples 'redirects to the stocks market'
+    end
+
+    context 'with invalid parameters' do
+      before do
+        post stocks_add_money_path, params: { money: nil }
+      end
+
+      include_examples 'redirects to the stocks market'
     end
   end
 
@@ -150,6 +180,14 @@ RSpec.describe 'Stocks', type: :request do
     describe 'GET /market' do
       before do
         get stocks_market_path
+      end
+
+      include_examples 'redirects to log in'
+    end
+
+    describe 'GET /top_up' do
+      before do
+        get stocks_top_up_path
       end
 
       include_examples 'redirects to log in'
