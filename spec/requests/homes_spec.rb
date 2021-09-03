@@ -26,4 +26,12 @@ RSpec.describe 'Homes', type: :request do
       end.to raise_error(ActionController::RoutingError)
     end
   end
+
+  describe 'GET /edit' do
+    it 'raises an error' do
+      expect do
+        get '/home/1/edit'
+      end.to raise_error(ActionController::RoutingError)
+    end
+  end
 end
