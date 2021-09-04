@@ -13,6 +13,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'devise'
 gem 'hamlit-rails'
 gem 'rails_admin', '~> 2.0'
