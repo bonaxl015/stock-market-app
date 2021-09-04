@@ -2,11 +2,14 @@ module OrdersHelper
   def process_buy_stock(user_id, order_shares, stock_id)
     stock = Stock.find_by(id: stock_id)
     buyer = User.find_by(id: user_id)
+    broker = User.find_by(id: stock.user_id)
 
     stock.shares -= order_shares
     stock.save
     total_price = stock.unit_price * order_shares
+    broker.money += total_price
     buyer.money -= total_price
+    broker.save
     buyer.save
   end
 
@@ -14,6 +17,7 @@ module OrdersHelper
     order = Order.find_by(id: order_id)
     stock = Stock.find_by(id: stock_id)
     buyer = User.find_by(id: user_id)
+    broker = User.find_by(id: stock.user_id)
 
     stock.shares += order.shares
     stock.save
@@ -24,7 +28,9 @@ module OrdersHelper
       order.shares = current_shares - order.shares
       order.save
     end
+    broker.money -= total_price
     buyer.money += total_price
+    broker.save
     buyer.save
   end
 
