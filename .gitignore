@@ -52,3 +52,4 @@ yarn-debug.log*
 /config/credentials/test.key
 
 /config/initializers/app_env_vars.rb
+.env
