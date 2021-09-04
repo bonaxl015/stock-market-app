@@ -18,7 +18,8 @@ class Stock < ApplicationRecord
   end
 
   def self.lookup(stock)
-    client = self.iex_api
+    client = Stock.iex_api
     stock_lookup = { name: client.quote(stock).company_name, unit_price: client.quote(stock).latest_price }
+    stock_lookup
   end
 end
