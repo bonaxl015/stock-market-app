@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'stocks/market'
   get 'stocks/top_up'
   post 'stocks/add_money'
+  post 'stocks/search'
   get 'orders/all'
   devise_for :users, controllers: { registrations: 'registrations' }
   resources :stocks, except: [:show] do

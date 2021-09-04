@@ -16,4 +16,9 @@ class Stock < ApplicationRecord
       endpoint: 'https://cloud.iexapis.com/v1'
     )
   end
+
+  def self.lookup(stock)
+    client = Stock.iex_api
+    { name: client.quote(stock).company_name, unit_price: client.quote(stock).latest_price }
+  end
 end
