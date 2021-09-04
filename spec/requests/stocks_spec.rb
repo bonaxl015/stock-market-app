@@ -6,6 +6,20 @@ RSpec.describe 'Stocks', type: :request do
   let(:valid_attributes) { attr_strat(:stock) }
   let(:invalid_attributes) { attr_strat(:stock, :invalid_attributes) }
 
+  let(:stock_search) do
+    ENV['IEX_API_PUBLISHABLE_TOKEN'] = 'pk_a770dc46f21640ef9c61535093921ba2'
+
+    client = IEX::Api::Client.new(
+      publishable_token: ENV['IEX_API_PUBLISHABLE_TOKEN'],
+      endpoint: 'https://cloud.iexapis.com/v1'
+    )
+
+    {
+      name: client.quote('MSFT').company_name,
+      unit_price: client.quote('MSFT').latest_price
+    }
+  end
+
   shared_context 'when user signed in' do
     before do
       sign_in create(:user, user_type: 'Broker')
@@ -127,6 +141,28 @@ RSpec.describe 'Stocks', type: :request do
       end
 
       include_examples 'redirects to the stocks market'
+    end
+  end
+
+  describe 'POST /search' do
+    include_context 'when user signed in'
+
+    context 'with valid parameters' do
+      before do
+        post stocks_search_path(stock_search), params: { stock: 'MSFT' }
+      end
+
+      it 'redirects to the new stock form' do
+        expect(response).to redirect_to(new_stock_path(stock_search))
+      end
+    end
+
+    context 'with invalid parameters' do
+      before do
+        post stocks_search_path(stock_search), params: { stock: nil }
+      end
+
+      include_examples 'renders unprocessable entity response'
     end
   end
 
