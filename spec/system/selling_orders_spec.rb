@@ -9,8 +9,8 @@ RSpec.describe 'SellingOrders', type: :system do
 
   let(:create_order) do
     create(:order, shares: 123,
-                  user_id: create_user.id,
-                  stock_id: create_stock.id)
+                   user_id: create_user.id,
+                   stock_id: create_stock.id)
   end
 
   let(:sell_button) { "a[href='/stocks/#{create_stock.id}/orders/#{create_order.id}/edit']" }
@@ -20,6 +20,10 @@ RSpec.describe 'SellingOrders', type: :system do
   end
 
   context 'when user signed in is buyer' do
+    let(:updated_money) do
+      create_user.money + (Order.find_by(stock_id: create_stock.id).unit_price * 12)
+    end
+
     before do
       sign_in create_user
       create_stock
@@ -37,6 +41,10 @@ RSpec.describe 'SellingOrders', type: :system do
 
     it 'increments its stock shares' do
       expect(Stock.find_by(id: create_stock.id).shares).to eq(1234 + 12)
+    end
+
+    it 'increments user money' do
+      expect(User.find_by(id: create_user.id).money).to eq(updated_money)
     end
   end
 

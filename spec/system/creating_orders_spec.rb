@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'CreatingOrders', type: :system do
-  let(:stock_shares) { Faker::Number.number(digits: 3) }
-  let(:create_stock) { create(:stock, shares: stock_shares) }
+  let(:create_user) { create(:user, user_type: 'Buyer') }
+  let(:create_stock) { create(:stock) }
   let(:buy_button) { "a[href='/stocks/#{create_stock.id}/orders/new']" }
 
   before do
@@ -12,8 +12,12 @@ RSpec.describe 'CreatingOrders', type: :system do
   context 'when user signed in is buyer' do
     let(:order_shares) { Faker::Number.number(digits: 2) }
 
+    let(:remaining_money) do
+      create_user.money - (Order.find_by(stock_id: create_stock.id).unit_price * order_shares)
+    end
+
     before do
-      sign_in create(:user, user_type: 'Buyer')
+      sign_in create_user
       create_stock
       visit stocks_market_path
       find(buy_button).click
@@ -27,7 +31,11 @@ RSpec.describe 'CreatingOrders', type: :system do
     end
 
     it 'decrements its stock shares' do
-      expect(Stock.find_by(id: create_stock.id).shares).to eq(stock_shares - order_shares)
+      expect(Stock.find_by(id: create_stock.id).shares).to eq(create_stock.shares - order_shares)
+    end
+
+    it 'decrements user money' do
+      expect(User.find_by(id: create_user.id).money).to eq(remaining_money)
     end
   end
 
