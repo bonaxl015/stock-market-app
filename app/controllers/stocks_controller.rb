@@ -43,12 +43,26 @@ class StocksController < ApplicationController
     @stock.destroy
     respond_to do |format|
       format.html { redirect_to stocks_market_path, notice: 'Stock was successfully deleted.' }
-      format.json { head :no_content }
     end
   end
 
   def market
     @stocks = Stock.all.order(:name)
+  end
+
+  def search
+    respond_to do |format|
+      if params[:stock]
+        @stock_search = Stock.lookup(params[:stock])
+        if @stock_search
+          format.html { redirect_to new_stock_path(@stock_search) }
+        else
+          format.html { redirect_to new_stock_path, notice: 'Please enter a valid stock symbol' }
+        end
+      else
+        format.html { render :new, status: :unprocessable_entity }
+      end
+    end
   end
 
   def top_up; end

@@ -19,6 +19,7 @@ class Stock < ApplicationRecord
 
   def self.lookup(stock)
     client = Stock.iex_api
+    stock.upcase
     { name: client.quote(stock).company_name, unit_price: client.quote(stock).latest_price }
   end
 end
