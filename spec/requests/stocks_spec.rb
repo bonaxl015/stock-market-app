@@ -8,8 +8,7 @@ RSpec.describe 'Stocks', type: :request do
 
   let(:stock_search) do
     client = IEX::Api::Client.new(
-      publishable_token: ENV['IEX_API_PUBLISHABLE_TOKEN'],
-      secret_token: ENV['IEX_API_SECRET_TOKEN'],
+      publishable_token: 'pk_a770dc46f21640ef9c61535093921ba2',
       endpoint: 'https://cloud.iexapis.com/v1'
     )
 
@@ -151,7 +150,7 @@ RSpec.describe 'Stocks', type: :request do
         post stocks_search_path(stock_search), params: { stock: 'MSFT' }
       end
 
-      it 'redirects to the new stock' do
+      it 'redirects to the new stock form' do
         expect(response).to redirect_to(new_stock_path(stock_search))
       end
     end
