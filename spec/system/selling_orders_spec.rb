@@ -1,15 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe 'SellingOrders', type: :system do
-  let(:create_user) { create(:user, user_type: 'Buyer') }
+  let(:create_buyer) { create(:user, user_type: 'Buyer') }
+  let(:create_broker) { create(:user, user_type: 'Broker') }
 
   let(:create_stock) do
-    create(:stock, shares: 1234)
+    create(:stock, shares: 1234, user_id: create_broker.id)
   end
 
   let(:create_order) do
     create(:order, shares: 123,
-                   user_id: create_user.id,
+                   user_id: create_buyer.id,
                    stock_id: create_stock.id)
   end
 
@@ -20,12 +21,10 @@ RSpec.describe 'SellingOrders', type: :system do
   end
 
   context 'when user signed in is buyer' do
-    let(:updated_money) do
-      create_user.money + (Order.find_by(stock_id: create_stock.id).unit_price * 12)
-    end
+    let(:total_price) { (Order.find_by(stock_id: create_stock.id).unit_price * 12) }
 
     before do
-      sign_in create_user
+      sign_in create_buyer
       create_stock
       create_order
       visit orders_all_path
@@ -44,7 +43,11 @@ RSpec.describe 'SellingOrders', type: :system do
     end
 
     it 'increments user money' do
-      expect(User.find_by(id: create_user.id).money).to eq(updated_money)
+      expect(User.find_by(id: create_buyer.id).money).to eq(create_buyer.money + total_price)
+    end
+
+    it "decrements broker's money" do
+      expect(User.find_by(id: create_broker.id).money).to eq(create_broker.money - total_price)
     end
   end
 
