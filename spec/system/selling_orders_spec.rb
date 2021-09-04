@@ -14,8 +14,6 @@ RSpec.describe 'SellingOrders', type: :system do
                    stock_id: create_stock.id)
   end
 
-  let(:sell_button) { "a[href='/stocks/#{create_stock.id}/orders/#{create_order.id}/edit']" }
-
   before do
     driven_by(:rack_test)
   end
@@ -28,7 +26,7 @@ RSpec.describe 'SellingOrders', type: :system do
       create_stock
       create_order
       visit orders_all_path
-      find(sell_button).click
+      find("a[href='/stocks/#{create_stock.id}/orders/#{create_order.id}/edit']").click
 
       fill_in 'order[shares]', with: 12
       find('input[type="submit"]').click
@@ -57,7 +55,7 @@ RSpec.describe 'SellingOrders', type: :system do
     end
 
     it 'does not render page with sell button' do
-      expect(page).not_to have_css(sell_button)
+      expect(page).not_to have_css("a[href='/stocks/#{create_stock.id}/orders/#{create_order.id}/edit']")
     end
   end
 end

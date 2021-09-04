@@ -4,7 +4,6 @@ RSpec.describe 'CreatingOrders', type: :system do
   let(:create_buyer) { create(:user, user_type: 'Buyer') }
   let(:create_broker) { create(:user, user_type: 'Broker') }
   let(:create_stock) { create(:stock, user_id: create_broker.id) }
-  let(:buy_button) { "a[href='/stocks/#{create_stock.id}/orders/new']" }
 
   before do
     driven_by(:rack_test)
@@ -18,7 +17,7 @@ RSpec.describe 'CreatingOrders', type: :system do
       sign_in create_buyer
       create_stock
       visit stocks_market_path
-      find(buy_button).click
+      find("a[href='/stocks/#{create_stock.id}/orders/new']").click
 
       fill_in 'order[shares]', with: order_shares
       find('input[type="submit"]').click
@@ -48,7 +47,7 @@ RSpec.describe 'CreatingOrders', type: :system do
     end
 
     it 'does not render page with buy button' do
-      expect(page).not_to have_css(buy_button)
+      expect(page).not_to have_css("a[href='/stocks/#{create_stock.id}/orders/new']")
     end
   end
 end
