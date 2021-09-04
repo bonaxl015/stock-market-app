@@ -7,8 +7,10 @@ RSpec.describe 'Stocks', type: :request do
   let(:invalid_attributes) { attr_strat(:stock, :invalid_attributes) }
 
   let(:stock_search) do
+    ENV['IEX_API_PUBLISHABLE_TOKEN'] = 'pk_a770dc46f21640ef9c61535093921ba2'
+
     client = IEX::Api::Client.new(
-      publishable_token: 'pk_a770dc46f21640ef9c61535093921ba2',
+      publishable_token: ENV['IEX_API_PUBLISHABLE_TOKEN'],
       endpoint: 'https://cloud.iexapis.com/v1'
     )
 

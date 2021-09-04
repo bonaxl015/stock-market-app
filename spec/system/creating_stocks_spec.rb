@@ -23,7 +23,6 @@ RSpec.describe 'CreatingStocks', type: :system do
     end
 
     it 'searches a stock' do
-      # stub_const('IEX_API_PUBLISHABLE_TOKEN', 'pk_a770dc46f21640ef9c61535093921ba2')
       ENV['IEX_API_PUBLISHABLE_TOKEN'] = 'pk_a770dc46f21640ef9c61535093921ba2'
       fill_in 'Enter Stock Symbol', with: 'MSFT'
       click_on 'Search'
