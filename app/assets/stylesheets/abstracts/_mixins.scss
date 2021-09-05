@@ -1,0 +1,87 @@
+@import "variables";
+
+@mixin mq($breakpoint, $width: 425px, $max-width: 1024px) {
+  @if $breakpoint == xsup {
+    @media only screen and (min-width: $xs) {
+      @content;
+    }
+  } @else if $breakpoint == smup {
+    @media only screen and (min-width: $sm) {
+      @content;
+    }
+  } @else if $breakpoint == mdup {
+    @media only screen and (min-width: $md) {
+      @content;
+    }
+  } @else if $breakpoint == lgup {
+    @media only screen and (min-width: $lg) {
+      @content;
+    }
+  } @else if $breakpoint == xlup {
+    @media only screen and (min-width: $xl) {
+      @content;
+    }
+  } @else if $breakpoint == xxl {
+    @media only screen and (min-width: $xxl) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == xxs {
+    @media only screen and (max-width: $xs - 1) {
+      @content;
+    }
+  } @else if $breakpoint == xs {
+    @media only screen and (max-width: $sm - 1) {
+      @content;
+    }
+  } @else if $breakpoint == sm {
+    @media only screen and (max-width: $md - 1) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media only screen and (max-width: $lg - 1) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media only screen and (max-width: $xl - 1) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media only screen and (max-width: $xxl - 1) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == max {
+    @media only screen and (max-width: $width) {
+      @content;
+    }
+  } @else if $breakpoint == min {
+    @media only screen and (min-width: $width) {
+      @content;
+    }
+  } @else if $breakpoint == min-max {
+    @media only screen and (min-width: $width) and (max-width: $max-width) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == ipad {
+    @media only screen and (min-width: 1023px) and (max-width: 1025px) and (min-height: 1365px) and (max-height: 1367px) and (-webkit-min-device-pixel-ratio: 1.5) {
+      @content;
+    }
+  } @else if $breakpoint == mobile {
+    @media only screen and (hover: none) and (pointer: coarse) {
+      @content;
+    }
+  } @else if $breakpoint == stylus {
+    @media (hover: none) and (pointer: fine) {
+      @content;
+    }
+  } @else if $breakpoint == controller {
+    @media (hover: hover) and (pointer: coarse) {
+      @content;
+    }
+  }
+}
