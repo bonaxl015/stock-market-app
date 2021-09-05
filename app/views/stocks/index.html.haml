@@ -14,11 +14,7 @@
     %tbody
       - @user_stocks.each do |user_stock|
         %tr
-          %td
-            - begin
-              = Stock.iex_api.quote(user_stock.name).company_name
-            - rescue
-              = user_stock.name
+          %td= user_stock.name
           %td= user_stock.unit_price
           %td= user_stock.shares
           %td= link_to "Edit", edit_stock_path(user_stock), class: "btn btn-orange"
