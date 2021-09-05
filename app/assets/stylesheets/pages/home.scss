@@ -1,0 +1,21 @@
+// @import "shared/main";
+
+.home-container {
+  margin: 14rem 20px 0;
+
+  @include mq(xsup) {
+    width: 36vw;
+    margin-left: 5rem;
+  }
+
+  @include mq(xsup) {
+    .title {
+      font-size: 4rem;
+      margin: 20px 0;
+    }
+
+    .description {
+      font-size: 25px;
+    }
+  }
+}

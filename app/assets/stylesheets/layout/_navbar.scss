@@ -1,0 +1,10 @@
+@import "../abstracts/*";
+
+@include mq(xxs) {
+  .navbar {
+    div {
+      width: 100%;
+      text-align: right;
+    }
+  }
+}
