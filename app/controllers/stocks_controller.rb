@@ -16,7 +16,7 @@ class StocksController < ApplicationController
 
     begin
       @stock.update(unit_price: Stock.iex_api.quote(@stock.name).latest_price)
-    rescue
+    rescue StandardError
       nil
     end
 
