@@ -14,10 +14,7 @@ RSpec.describe 'Stocks', type: :request do
       endpoint: 'https://cloud.iexapis.com/v1'
     )
 
-    {
-      name: client.quote('MSFT').company_name,
-      unit_price: client.quote('MSFT').latest_price
-    }
+    { name: client.quote('MSFT').symbol }
   end
 
   shared_context 'when user signed in' do
