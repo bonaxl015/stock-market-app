@@ -1,46 +1,21 @@
-html {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-body {
-    color: #FFF;
-    height: 100%;
-    background-image: url("/bg-stock.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
+// @import "shared/main";
 
 .home-container {
-    height: 300px;
-    width: 600px;
-    margin-top: 14rem;
+  margin: 14rem 20px 0;
+
+  @include mq(xsup) {
+    width: 36vw;
     margin-left: 5rem;
-}
+  }
 
-.title {
-    font-size: 4rem;
-    margin: 20px 0;
-}
-
-.description {
-    font-size: 25px;
-}
-
-.btn-home {
-    margin: 30px 0;
-}
-
-.btn-space {
-    margin: 10px 10px;
-}
-
-.btn-orange {
-    background-color: #F2A76A;
-    color: #FFF;
-    &:hover {
-        color: #FFF;
+  @include mq(xsup) {
+    .title {
+      font-size: 4rem;
+      margin: 20px 0;
     }
+
+    .description {
+      font-size: 25px;
+    }
+  }
 }
