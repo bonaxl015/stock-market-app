@@ -14,10 +14,7 @@
       .card.shadow.p-3.mb-5.bg-light.rounded.stock-card
         .card-body.text-dark
           %h5.card-title
-            - begin
-              = Stock.iex_api.quote(stock.name).company_name
-            - rescue
-              = stock.name
+            = stock.name
           %p.card-text $#{stock.unit_price} per share
           %p.card-text #{number_with_delimiter(stock.shares, :delimiter => ',')} shares available
           .container.d-flex.justify-content-evenly
