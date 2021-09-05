@@ -1,0 +1,27 @@
+@import "../abstracts/*";
+
+.form-outer-container {
+  margin-top: 5rem;
+
+  &.order-form {
+    margin-top: 2.5rem;
+  }
+
+  .form-card {
+    width: 350px;
+
+    @include mq(xxs) {
+      width: 280px;
+    }
+
+    .form-title {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    label[for="user_user_type"] {
+      color: #fff;
+      margin-right: 16px;
+    }
+  }
+}
