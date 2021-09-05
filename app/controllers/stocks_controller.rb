@@ -14,6 +14,12 @@ class StocksController < ApplicationController
   def create
     @stock = current_user.stocks.build(stock_params)
 
+    begin
+      @stock.update(unit_price: Stock.iex_api.quote(@stock.name).latest_price)
+    rescue StandardError
+      nil
+    end
+
     respond_to do |format|
       if @stock.save
         format.html { redirect_to stocks_market_path, notice: 'Stock was successfully added.' }
