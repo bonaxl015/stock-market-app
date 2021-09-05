@@ -1,13 +1,13 @@
 = form_with model: @stock do |f|
   .form-floating.mb-4
-    - if params[:name].present?
-      = f.text_field :name, class: "form-control", id: "name", placeholder: "Company Name", value: Stock.iex_api.quote(params[:name]).symbol, readonly: true
+    - if params[:symbol].present?
+      = f.text_field :name, class: "form-control", id: "name", placeholder: "Company Name", value: Stock.iex_api.quote(params[:symbol]).company_name, readonly: true
     - else
       = f.text_field :name, class: "form-control", id: "name", placeholder: "Company Name"
     %label(for="floatingInput") Company Name
   .form-floating.mb-4
-    - if params[:name].present?
-      = f.number_field :unit_price, in: 0.01..10000, step: 0.01, class: "form-control", id: "unit_price", placeholder: "Stock Price", value: Stock.iex_api.quote(params[:name]).latest_price, readonly: true
+    - if params[:symbol].present?
+      = f.number_field :unit_price, in: 0.01..10000, step: 0.01, class: "form-control", id: "unit_price", placeholder: "Stock Price", value: Stock.iex_api.quote(params[:symbol]).latest_price, readonly: true
     - else
       = f.number_field :unit_price, in: 0.01..10000, step: 0.01, class: "form-control", id: "unit_price", placeholder: "Stock Price"
     %label(for="floatingInput") Stock Price
