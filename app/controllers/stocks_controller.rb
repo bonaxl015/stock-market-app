@@ -58,8 +58,8 @@ class StocksController < ApplicationController
 
   def search
     respond_to do |format|
-      if params[:stock]
-        @stock_search = Stock.lookup(params[:stock])
+      if params[:symbol]
+        @stock_search = Stock.lookup(params[:symbol])
         if @stock_search
           format.html { redirect_to new_stock_path(@stock_search) }
         else
