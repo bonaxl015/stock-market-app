@@ -1,7 +1,7 @@
 %nav.navbar.navbar-dark.bg-dark
   .container
-    %h1 Stock Trading App
-    %div 
+    %p.mb-0.navbar-brand Stock Trading App
+    %div
       - if user_signed_in?
         = link_to 'Log out', destroy_user_session_path, method: :delete, class: "btn btn-danger btn-space"
       - else
