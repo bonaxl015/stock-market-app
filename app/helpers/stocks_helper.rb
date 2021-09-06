@@ -6,10 +6,11 @@ module StocksHelper
   end
 
   def keep_symbol(stock_symbol)
-    @@symbol = stock_symbol
+    # @@symbol = stock_symbol
+    Stock.class_variable_set(:@@symbol, stock_symbol)
   end
 
   def retrieve_symbol
-    @@symbol
+    Stock.class_variable_get(:@@symbol)
   end
 end
