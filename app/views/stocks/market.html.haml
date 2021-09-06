@@ -1,28 +1,25 @@
-.container.card.shadow.p-3.mb-5.bg-secondary.rounded.market-container
-  .d-flex.justify-content-between.align-items-center.market-header.container
-    %div
-      %h2 All Stocks
-    .d-flex.justify-content-evenly.align-items-center
-      - if current_user.user_type == 'Buyer'
-        = link_to "Top Up", stocks_top_up_path, class: "btn btn-orange btn-space"
-        = link_to "My Portfolio", orders_all_path, class: "btn btn-orange btn-space"
-      - if current_user.user_type == 'Broker'
-        = link_to "Add New Stock", new_stock_path, class: "btn btn-orange btn-space"
-        = link_to "My Portfolio", stocks_path, class: "btn btn-orange btn-space"
-  .d-flex.justify-content-evenly.flex-wrap.container
-    - @stocks.each do |stock|
-      .card.shadow.p-3.mb-5.bg-light.rounded.stock-card
-        .card-body.text-dark
-          %h5.card-title
-            - begin
-              = Stock.iex_api.quote(stock.name).company_name
-            - rescue
-              = stock.name
-          %p.card-text $#{stock.unit_price} per share
-          %p.card-text #{number_with_delimiter(stock.shares, :delimiter => ',')} shares available
-          .container.d-flex.justify-content-evenly
-            - if current_user.user_type == 'Buyer'
-              = link_to "Buy", new_stock_order_path(stock),class: "btn btn-orange"
-            - elsif current_user.user_type == 'Broker'
-              = link_to "Edit", edit_stock_path(stock), class: "btn btn-orange btn-space"
-              = link_to "Delete", stock, method: :delete, class: "btn btn-danger btn-space", data: { confirm: 'Are you sure?' }
+.container
+  .card.shadow.p-3.mb-5.bg-secondary.rounded.market-container
+    .d-flex.justify-content-between.align-items-center.market-header.container
+      %div
+        %h2 All Stocks
+      .d-flex.justify-content-evenly.align-items-center
+        - if current_user.user_type == 'Buyer'
+          = link_to "Top Up", stocks_top_up_path, class: "btn btn-orange btn-space"
+          = link_to "My Portfolio", orders_all_path, class: "btn btn-orange btn-space"
+        - if current_user.user_type == 'Broker'
+          = link_to "Add New Stock", new_stock_path, class: "btn btn-orange btn-space"
+          = link_to "My Portfolio", stocks_path, class: "btn btn-orange btn-space"
+    .d-flex.justify-content-evenly.flex-wrap.container
+      - @stocks.each do |stock|
+        .card.shadow.p-3.mb-5.bg-light.rounded.stock-card
+          .card-body.text-dark
+            %h5.card-title= stock.name
+            %p.card-text $#{stock.unit_price} per share
+            %p.card-text #{number_with_delimiter(stock.shares, :delimiter => ',')} shares available
+            .container.d-flex.justify-content-evenly
+              - if current_user.user_type == 'Buyer'
+                = link_to "Buy", new_stock_order_path(stock),class: "btn btn-orange"
+              - elsif current_user.user_type == 'Broker'
+                = link_to "Edit", edit_stock_path(stock), class: "btn btn-orange btn-space"
+                = link_to "Delete", stock, method: :delete, class: "btn btn-danger btn-space", data: { confirm: 'Are you sure?' }

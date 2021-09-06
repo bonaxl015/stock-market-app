@@ -1,4 +1,4 @@
-require: 
+require:
   - rubocop-rails
   - rubocop-rspec
 
@@ -43,6 +43,9 @@ Style/Documentation:
   Enabled: false
 
 Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/ClassVars:
   Enabled: false
 
 Bundler/OrderedGems:

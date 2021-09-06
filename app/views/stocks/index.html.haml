@@ -1,25 +1,22 @@
-.container.card.shadow.p-3.mb-5.bg-secondary.rounded.market-container
-  .d-flex.justify-content-between.align-items-center.market-header.container
-    %div
-      %h2 My Stocks
-    .d-flex.justify-content-evenly.align-items-center
-      = link_to "Back", stocks_market_path, class: "btn btn-danger"
-  %table.table.table-light.center
-    %thead
-      %tr
-        %th{:scope => "col"} Stock Name
-        %th{:scope => "col"} Price Per Share
-        %th{:scope => "col"} Number of Shares Available
-        %th{:colspan => "2", :scope => "col"} Actions
-    %tbody
-      - @user_stocks.each do |user_stock|
+.container
+  .card.shadow.p-3.mb-5.bg-secondary.rounded.market-container
+    .d-flex.justify-content-between.align-items-center.market-header.container
+      %div
+        %h2 My Stocks
+      .d-flex.justify-content-evenly.align-items-center
+        = link_to "Back", stocks_market_path, class: "btn btn-danger"
+    %table.table.table-light.center
+      %thead
         %tr
-          %td
-            - begin
-              = Stock.iex_api.quote(user_stock.name).company_name
-            - rescue
-              = user_stock.name
-          %td= user_stock.unit_price
-          %td= user_stock.shares
-          %td= link_to "Edit", edit_stock_path(user_stock), class: "btn btn-orange"
-          %td= link_to "Delete", user_stock, method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure?' }
+          %th{:scope => "col"} Stock Name
+          %th{:scope => "col"} Price Per Share
+          %th{:scope => "col"} Number of Shares Available
+          %th{:colspan => "2", :scope => "col"} Actions
+      %tbody
+        - @user_stocks.each do |user_stock|
+          %tr
+            %td= user_stock.name
+            %td= user_stock.unit_price
+            %td= user_stock.shares
+            %td= link_to "Edit", edit_stock_path(user_stock), class: "btn btn-orange"
+            %td= link_to "Delete", user_stock, method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure?' }

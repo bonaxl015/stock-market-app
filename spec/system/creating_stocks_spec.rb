@@ -16,10 +16,10 @@ RSpec.describe 'CreatingStocks', type: :system do
 
     it 'creates a stock' do
       fill_in 'stock[name]', with: name
-      fill_in 'stock[unit_price]', with: Faker::Number.number(digits: 5)
-      fill_in 'stock[shares]', with: Faker::Number.number(digits: 6)
+      fill_in 'stock[unit_price]', with: Faker::Number.between(from: 1, to: 10)
+      fill_in 'stock[shares]', with: Faker::Number.number(digits: 4)
       click_on 'Submit'
-      expect(Stock.find_by(name: name)).not_to eq(nil)
+      expect(page).to have_content('Stock was successfully added.')
     end
 
     it 'searches a stock' do
