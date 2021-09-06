@@ -4,4 +4,12 @@ module StocksHelper
     user.money += amount.to_i
     user.save
   end
+
+  def keep_symbol(stock_symbol)
+    @@symbol = stock_symbol
+  end
+
+  def retrieve_symbol
+    @@symbol
+  end
 end
