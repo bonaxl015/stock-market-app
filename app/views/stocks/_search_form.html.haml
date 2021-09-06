@@ -1,6 +1,6 @@
 = form_with url: stocks_search_path do |f|
   .form-floating.mb-4
-    = f.text_field :stock, class: "form-control", id: "name", placeholder: "Enter Stock Symbol"
+    = f.text_field :symbol, class: "form-control", id: "name", placeholder: "Enter Stock Symbol"
     %label(for="floatingInput") Enter Stock Symbol
   .d-flex.justify-content-evenly
     = f.submit :Search, class: "btn btn-orange"
