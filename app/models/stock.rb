@@ -20,6 +20,6 @@ class Stock < ApplicationRecord
   def self.lookup(stock)
     client = Stock.iex_api
     stock.upcase
-    { name: client.quote(stock).symbol }
+    { symbol: client.quote(stock).symbol }
   end
 end
