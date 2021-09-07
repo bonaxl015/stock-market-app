@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
 
   def create
     @order = @stock.orders.build(order_params.merge(user_id: current_user.id))
+    @order.update(name: @stock.name, unit_price: @stock.unit_price)
 
     respond_to do |format|
       if @order.save
