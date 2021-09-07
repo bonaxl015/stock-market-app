@@ -9,7 +9,6 @@ RSpec.describe 'CreatingStocks', type: :system do
 
   context 'when user signed in is broker' do
     before do
-      ENV['IEX_API_PUBLISHABLE_TOKEN'] = 'pk_a770dc46f21640ef9c61535093921ba2'
       sign_in create(:user, user_type: 'Broker')
       visit stocks_market_path
       find('a[href="/stocks/new"]').click
