@@ -9,6 +9,7 @@ class StocksController < ApplicationController
 
   def new
     @stock = current_user.stocks.build
+    keep_symbol('')
   end
 
   def create
@@ -57,6 +58,7 @@ class StocksController < ApplicationController
 
   def market
     @stocks = Stock.all.order(:name)
+    keep_symbol('')
   end
 
   def search
