@@ -9,15 +9,14 @@ class StocksController < ApplicationController
 
   def new
     @stock = current_user.stocks.build
-    keep_symbol('')
   end
 
   def create
     @stock = current_user.stocks.build(stock_params)
 
     begin
-      @stock_name = Stock.iex_api.quote(retrieve_symbol).company_name
-      @stock_price = Stock.iex_api.quote(retrieve_symbol).latest_price
+      @stock_name = Stock.iex_api.quote(session[:symbol]).company_name
+      @stock_price = Stock.iex_api.quote(session[:symbol]).latest_price
       @stock.update(name: @stock_name, unit_price: @stock_price)
     rescue StandardError
       nil
@@ -25,7 +24,7 @@ class StocksController < ApplicationController
 
     respond_to do |format|
       if @stock.save
-        keep_symbol('')
+        session[:symbol] = ''
         format.html { redirect_to stocks_market_path, notice: 'Stock was successfully added.' }
         format.json { render :index, status: :created, location: @stock }
       else
@@ -58,7 +57,7 @@ class StocksController < ApplicationController
 
   def market
     @stocks = Stock.all.order(:name)
-    keep_symbol('')
+    session[:symbol] = ''
   end
 
   def search
@@ -66,7 +65,7 @@ class StocksController < ApplicationController
       if params[:symbol]
         @stock_search = Stock.lookup(params[:symbol])
         if @stock_search
-          keep_symbol(params[:symbol])
+          session[:symbol] = params[:symbol]
           format.html { redirect_to new_stock_path(@stock_search) }
         else
           format.html { redirect_to new_stock_path, notice: 'Please enter a valid stock symbol' }
