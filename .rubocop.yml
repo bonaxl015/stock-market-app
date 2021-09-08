@@ -45,9 +45,6 @@ Style/Documentation:
 Style/ClassAndModuleChildren:
   Enabled: false
 
-Style/ClassVars:
-  Enabled: false
-
 Bundler/OrderedGems:
   Enabled: false
 
