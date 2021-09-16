@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   subject(:user) { create(:user) }
+  let(:another) { create(:user) }
 
   it 'has many stocks' do
     expect(described_class.reflect_on_association(:stocks).macro).to eq :has_many
@@ -47,8 +48,6 @@ RSpec.describe User, type: :model do
     end
 
     context 'when unique but case sensitive' do
-      let(:another) { create(:user) }
-
       before do
         user.username = another.username.upcase
         user.valid?
@@ -60,8 +59,6 @@ RSpec.describe User, type: :model do
     end
 
     context 'when unique but not case sensitive' do
-      let(:another) { create(:user) }
-
       before do
         user.username = another.username
         user.valid?
