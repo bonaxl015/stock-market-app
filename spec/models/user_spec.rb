@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   subject(:user) { create(:user) }
+
   let(:another) { create(:user) }
 
   it 'has many stocks' do
