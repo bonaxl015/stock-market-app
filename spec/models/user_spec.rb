@@ -12,13 +12,13 @@ RSpec.describe User, type: :model do
   end
 
   it 'deletes its stocks' do
-    create(:stock)
+    create(:stock, user_id: user.id)
     user.destroy
     expect(Stock.find_by(user_id: user.id)).to eq nil
   end
 
   it 'deletes its orders' do
-    create(:order)
+    create(:order, user_id: user.id)
     user.destroy
     expect(Order.find_by(user_id: user.id)).to eq nil
   end
