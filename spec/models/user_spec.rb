@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   subject(:user) { create(:user) }
 
+  let(:another) { create(:user) }
+
   it 'has many stocks' do
     expect(described_class.reflect_on_association(:stocks).macro).to eq :has_many
   end
@@ -12,13 +14,13 @@ RSpec.describe User, type: :model do
   end
 
   it 'deletes its stocks' do
-    create(:stock)
+    create(:stock, user_id: user.id)
     user.destroy
     expect(Stock.find_by(user_id: user.id)).to eq nil
   end
 
   it 'deletes its orders' do
-    create(:order)
+    create(:order, user_id: user.id)
     user.destroy
     expect(Order.find_by(user_id: user.id)).to eq nil
   end
@@ -47,8 +49,6 @@ RSpec.describe User, type: :model do
     end
 
     context 'when unique but case sensitive' do
-      let(:another) { create(:user) }
-
       before do
         user.username = another.username.upcase
         user.valid?
@@ -60,8 +60,6 @@ RSpec.describe User, type: :model do
     end
 
     context 'when unique but not case sensitive' do
-      let(:another) { create(:user) }
-
       before do
         user.username = another.username
         user.valid?
