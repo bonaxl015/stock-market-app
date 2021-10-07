@@ -49,6 +49,18 @@ RailsAdmin.config do |config|
         end
       end
 
+      configure :confirmation_token do
+        hide
+      end
+
+      configure :confirmed_at do
+        hide
+      end
+
+      configure :confirmation_sent_at do
+        hide
+      end
+
       configure :reset_password_sent_at do
         hide
       end
