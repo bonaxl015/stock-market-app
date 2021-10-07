@@ -28,7 +28,7 @@ RSpec.describe Stock, type: :model do
       expect(stock.errors[:name].size).to eq(1)
     end
 
-    context 'when unique but case sensitive' do
+    context 'when not unique but case sensitive' do
       let(:another) { create(:stock) }
 
       before do
@@ -41,7 +41,7 @@ RSpec.describe Stock, type: :model do
       end
     end
 
-    context 'when unique but not case sensitive' do
+    context 'when not unique but not case sensitive' do
       let(:another) { create(:stock) }
 
       before do
